@@ -8,12 +8,12 @@ public class Battle {
 
         while (true) {
             warrior1.attackEnemy(warrior2);
-            if (!warrior2.isAlive) {
+            if (!warrior2.getAlive()) {
                 return true;
             }
 
             warrior2.attackEnemy(warrior1);
-            if (!warrior1.isAlive) {
+            if (!warrior1.getAlive()) {
                 return false;
             }
         }
