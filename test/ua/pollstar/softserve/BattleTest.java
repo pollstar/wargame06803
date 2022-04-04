@@ -1,6 +1,5 @@
 package ua.pollstar.softserve;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ class BattleTest {
     private Knight knight;
 
     @BeforeEach
-    void initEach(){
+    public void initEach(){
         warrior1 = new Warrior();
         warrior2 = new Warrior();
         knight = new Knight();
