@@ -9,13 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BattleTest {
     private Warrior warrior1, warrior2;
     private Knight knight;
-
-    @BeforeEach
-    public void initEach(){
-        warrior1 = new Warrior();
-        warrior2 = new Warrior();
-        knight = new Knight();
-    }
+    private Army army1, army2;
 
     @Test
     @DisplayName("test fight betwen Warrior and Knight")
@@ -27,7 +21,10 @@ class BattleTest {
          *                      test="fight(carl, jim)",
          *                      answer=False)
         */
-        var result = Battle.fight(warrior1, knight);
+        warrior1 = new Warrior();
+        knight = new Knight();
+
+        var result = Battle.fightWarriors(warrior1, knight);
         assertFalse(result);
     }
 
@@ -41,7 +38,10 @@ class BattleTest {
          *                      test="fight(ramon, slevin)",
          *                      answer=True)
          */
-        var result = Battle.fight(knight, warrior1);
+        warrior1 = new Warrior();
+        knight = new Knight();
+
+        var result = Battle.fightWarriors(knight, warrior1);
 
         assertTrue(result);
     }
@@ -57,7 +57,10 @@ class BattleTest {
          *                      test="bob.is_alive",
          *                      answer=True)
          */
-        Battle.fight(warrior1, warrior2);
+        warrior1 = new Warrior();
+        warrior2 = new Warrior();
+
+        Battle.fightWarriors(warrior1, warrior2);
         assertTrue(warrior1.getAlive());
     }
 
@@ -73,7 +76,10 @@ class BattleTest {
          *                      answer=True)
          */
 
-        Battle.fight(knight, warrior1);
+        warrior1 = new Warrior();
+        knight = new Knight();
+
+        Battle.fightWarriors(knight, warrior1);
         assertTrue(knight.getAlive());
     }
 
@@ -88,7 +94,10 @@ class BattleTest {
          *                      test="wife.is_alive",
          *                      answer=False)
          */
-        Battle.fight(warrior1, warrior2);
+        warrior1 = new Warrior();
+        warrior2 = new Warrior();
+
+        Battle.fightWarriors(warrior1, warrior2);
         assertFalse(warrior2.getAlive());
     }
 
@@ -103,7 +112,10 @@ class BattleTest {
          *                      test="knight.is_alive",
          *                      answer=True)
          */
-        Battle.fight(warrior1, knight);
+        warrior1 = new Warrior();
+        knight = new Knight();
+
+        Battle.fightWarriors(warrior1, knight);
         assertTrue(knight.getAlive());
     }
 
@@ -119,8 +131,126 @@ class BattleTest {
          *                      test="fight(unit_2, unit_3)",
          *                      answer=False)
          */
-        Battle.fight(warrior1, knight);
-        var result = Battle.fight(knight, warrior2);
+        warrior1 = new Warrior();
+        warrior2 = new Warrior();
+        knight = new Knight();
+
+        Battle.fightWarriors(warrior1, knight);
+        var result = Battle.fightWarriors(knight, warrior2);
         assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Test1. Army")
+    void battle1() {
+        /**
+         * army_1.add_units(Warrior, 1)
+         * army_2.add_units(Warrior, 2)
+         * battle = Battle()''',
+         *                      test="battle.fight(army_1, army_2)",
+         *                      answer=False)
+         */
+        army1 = new Army();
+        army2 = new Army();
+
+        army1.addUnit(TypeWarrior.WARRIOR, 1);
+        army2.addUnit(TypeWarrior.WARRIOR, 2);
+
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test2. Army")
+    void battle2() {
+        /**
+         army_1.add_units(Warrior, 2)
+         army_2.add_units(Warrior, 3)
+         battle = Battle()''',
+         test="battle.fight(army_1, army_2)",
+         answer=False)
+         */
+        army1 = new Army();
+        army2 = new Army();
+
+        army1.addUnit(TypeWarrior.WARRIOR, 2);
+        army2.addUnit(TypeWarrior.WARRIOR, 3);
+
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test3. Army")
+    void battle3() {
+        /**
+         army_1.add_units(Warrior, 5)
+         army_2.add_units(Warrior, 7)
+         battle = Battle()''',
+         test="battle.fight(army_1, army_2)",
+         answer=False)
+         */
+        army1 = new Army();
+        army2 = new Army();
+
+        army1.addUnit(TypeWarrior.WARRIOR, 5);
+        army2.addUnit(TypeWarrior.WARRIOR, 7);
+
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test4. Army")
+    void battle4() {
+        /**
+         army_1.add_units(Warrior, 20)
+         army_2.add_units(Warrior, 21)
+         battle = Battle()''',
+         test="battle.fight(army_1, army_2)",
+         answer=True)
+         */
+        army1 = new Army();
+        army2 = new Army();
+
+        army1.addUnit(TypeWarrior.WARRIOR, 20);
+        army2.addUnit(TypeWarrior.WARRIOR, 21);
+
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test5. Army")
+    void battle5() {
+        /**
+         army_1.add_units(Warrior, 10)
+         army_2.add_units(Warrior, 11)
+         battle = Battle()''',
+         test="battle.fight(army_1, army_2)",
+         answer=True)
+         */
+        army1 = new Army();
+        army2 = new Army();
+
+        army1.addUnit(TypeWarrior.WARRIOR, 10);
+        army2.addUnit(TypeWarrior.WARRIOR, 11);
+
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test6. Army")
+    void battle6() {
+        /**
+         army_1.add_units(Warrior, 11)
+         army_2.add_units(Warrior, 7)
+         battle = Battle()''',
+         test="battle.fight(army_1, army_2)",
+         answer=True)
+         */
+        army1 = new Army();
+        army2 = new Army();
+
+        army1.addUnit(TypeWarrior.WARRIOR, 11);
+        army2.addUnit(TypeWarrior.WARRIOR, 7);
+
+        assertTrue(Battle.fight(army1, army2));
     }
 }

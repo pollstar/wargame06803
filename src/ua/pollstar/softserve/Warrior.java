@@ -10,12 +10,15 @@ public class Warrior {
     }
 
     public void attackEnemy(Warrior enemy) {
+        if (enemy == null) {
+            return;
+        }
         enemy.setDamage(getAttack());
     }
 
-    private void setDamage (int damage ) {
+    private void setDamage(int damage) {
         health -= damage;
-        if(health < 0) {
+        if (health <= 0) {
             isAlive = false;
         }
     }
