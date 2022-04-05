@@ -1,5 +1,8 @@
 package ua.pollstar.softserve;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class Warrior {
     protected int health = 50;
     protected boolean isAlive = true;
@@ -25,5 +28,27 @@ public class Warrior {
 
     public int getAttack() {
         return attack;
+    }
+
+    public enum Type {
+        WARRIOR,
+        KNIGHT
+    }
+
+    public static Warrior warriorFactory(Type type) {
+        return switch (type) {
+            case WARRIOR -> new Warrior();
+            case KNIGHT -> new Knight();
+        };
+    }
+
+    public static Warrior warriorFactory(Class<? extends Warrior> warriorClass) {
+        try {
+            var constructor = warriorClass.getDeclaredConstructor();
+            return constructor.newInstance();
+        } catch (NoSuchMethodException | IllegalAccessException
+                | InstantiationException | InvocationTargetException e) {
+            return null;
+        }
     }
 }

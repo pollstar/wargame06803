@@ -2,13 +2,13 @@ package ua.pollstar.softserve;
 
 public class Battle {
     public static boolean fight(Army army1, Army army2) {
-        while (army1.getIsAlive() && army2.getIsAlive()) {
-            fightWarriors(army1.getWarrior(), army2.getWarrior());
+        while (army1.isAlive() && army2.isAlive()) {
+            fight(army1.getWarrior(), army2.getWarrior());
         }
-        return army1.getIsAlive();
+        return army1.isAlive();
     }
 
-    public static boolean fightWarriors(Warrior warrior1, Warrior warrior2) {
+    public static boolean fight(Warrior warrior1, Warrior warrior2) {
         while (warrior1.getAlive()) {
             warrior1.attackEnemy(warrior2);
             if (warrior2.getAlive()) {

@@ -1,47 +1,41 @@
 package ua.pollstar.softserve;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Army {
-    private final List<Warrior> warriorsList = new ArrayList<>();
-    private boolean isAlive = false;
+    private final Queue<Warrior> troops = new LinkedList<>();
 
-    public void addUnit(TypeWarrior warrior, int count) {
+    public void addUnit(Warrior.Type warrior, int count) {
         if (count <= 0) {
             return;
         }
-        isAlive = true;
         for (int i = 0; i < count; i++) {
-            switch (warrior) {
-                case WARRIOR -> warriorsList.add(new Warrior());
-                case KNIGHT -> warriorsList.add(new Knight());
-            }
+            troops.offer(Warrior.warriorFactory(warrior));
+        }
+    }
+
+    public void addUnit(Class <? extends Warrior> warrior, int count) {
+        for (int i = 0; i < count; i++) {
+            troops.offer(Warrior.warriorFactory(warrior));
         }
     }
 
     public Warrior getWarrior() {
-        if (warriorsList.isEmpty()) {
-            return null;
+        if (isAlive()) {
+                return troops.peek();
         }
-        for (Warrior warrior : warriorsList) {
-            if (warrior.getAlive()) {
-                return warrior;
-            }
-        }
-        isAlive = false;
         return null;
     }
 
-    public boolean getIsAlive() {
-        if (isAlive) {
-            for (Warrior warrior : warriorsList) {
-                if (warrior.getAlive()) {
-                    return true;
-                }
+    public boolean isAlive() {
+        while (!troops.isEmpty()) {
+            if (troops.peek().getAlive()) {
+                return true;
+            } else {
+                troops.poll();
             }
         }
-        isAlive = false;
         return false;
     }
 }
