@@ -30,7 +30,7 @@ public class Army {
 
     public boolean isAlive() {
         while (!troops.isEmpty()) {
-            if (troops.peek().getAlive()) {
+            if (troops.peek().isAlive()) {
                 return true;
             } else {
                 troops.poll();

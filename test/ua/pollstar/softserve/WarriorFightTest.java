@@ -58,7 +58,7 @@ class WarriorFightTest {
          *                      answer=True)
          */
         Battle.fight(warrior1, warrior2);
-        assertTrue(warrior1.getAlive());
+        assertTrue(warrior1.isAlive());
     }
 
     @Test
@@ -73,7 +73,7 @@ class WarriorFightTest {
          *                      answer=True)
          */
         Battle.fight(knight, warrior1);
-        assertTrue(knight.getAlive());
+        assertTrue(knight.isAlive());
     }
 
     @Test
@@ -88,7 +88,7 @@ class WarriorFightTest {
          *                      answer=False)
          */
         Battle.fight(warrior1, warrior2);
-        assertFalse(warrior2.getAlive());
+        assertFalse(warrior2.isAlive());
     }
 
     @Test
@@ -103,7 +103,7 @@ class WarriorFightTest {
          *                      answer=True)
          */
         Battle.fight(warrior1, knight);
-        assertTrue(knight.getAlive());
+        assertTrue(knight.isAlive());
     }
 
     @Test

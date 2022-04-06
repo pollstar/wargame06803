@@ -1,15 +1,19 @@
 package ua.pollstar.softserve;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class Warrior {
-    protected int health = 50;
-    protected boolean isAlive = true;
-    private static int attack = 5;
+    protected int health;
+    protected boolean alive = true;
+    protected int attack;
 
-    public boolean getAlive() {
-        return isAlive;
+    public Warrior() {
+        health = 50;
+        attack = 5;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     public void attackEnemy(Warrior enemy) {
@@ -22,7 +26,7 @@ public class Warrior {
     private void setDamage(int damage) {
         health -= damage;
         if (health <= 0) {
-            isAlive = false;
+            alive = false;
         }
     }
 

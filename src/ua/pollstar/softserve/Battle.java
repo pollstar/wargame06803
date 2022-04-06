@@ -9,12 +9,12 @@ public class Battle {
     }
 
     public static boolean fight(Warrior warrior1, Warrior warrior2) {
-        while (warrior1.getAlive()) {
+        while (warrior1.isAlive()) {
             warrior1.attackEnemy(warrior2);
-            if (warrior2.getAlive()) {
+            if (warrior2.isAlive()) {
                 warrior2.attackEnemy(warrior1);
             }
-            if (!warrior2.getAlive()) {
+            if (!warrior2.isAlive()) {
                 return true;
             }
         }
