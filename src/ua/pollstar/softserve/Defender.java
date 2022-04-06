@@ -4,16 +4,15 @@ public class Defender extends Warrior{
     protected int defense;
 
     public Defender() {
+        health = 60;
         defense = 2;
         attack = 3;
     }
 
     protected void setDamage(int damage) {
         if (damage > defense) {
-            health -= damage;
-            if (health <= 0) {
-                alive = false;
-            }
+            health -= damage - defense;
+            alive = health > 0;
         }
     }
 }

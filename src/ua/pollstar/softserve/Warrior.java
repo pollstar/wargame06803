@@ -25,9 +25,7 @@ public class Warrior {
 
     protected void setDamage(int damage) {
         health -= damage;
-        if (health <= 0) {
-            alive = false;
-        }
+        alive = health > 0;
     }
 
     public int getAttack() {

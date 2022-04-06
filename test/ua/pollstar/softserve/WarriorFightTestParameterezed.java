@@ -3,24 +3,35 @@ package ua.pollstar.softserve;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.stream.Stream;
 
-class WarriorFightTest {
-    private Warrior warrior1, warrior2;
+import static org.junit.jupiter.api.Assertions.*;
+
+class WarriorFightTestParameterezed {
+    private Warrior warrior, warrior2;
     private Knight knight;
 
     @BeforeEach
     void init () {
-        warrior1 = new Warrior();
+        warrior = new Warrior();
         warrior2 = new Warrior();
         knight = new Knight();
     }
 
-    @Test
-    @DisplayName("test fight between Warrior and Knight")
-    void fight1 () {
+    private static Stream<Arguments> arguments() {
+        return Stream.of(
+                Arguments.of(new Warrior(), new Knight(), false),
+                Arguments.of(new Knight(), new Warrior(), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+     public void fight(Warrior w1, Warrior w2, boolean test) {
         /*
          *     "1. Fight": [
          * carl = Warrior()
@@ -28,22 +39,8 @@ class WarriorFightTest {
          *                      test="fight(carl, jim)",
          *                      answer=False)
         */
-        var result = Battle.fight(warrior1, knight);
-        assertFalse(result);
-    }
-
-    @Test
-    @DisplayName("test fight between Knight and Warrior")
-    void fight2 () {
-        /*
-         *     "2. Fight": [
-         * ramon = Knight()
-         * slevin = Warrior()''',
-         *                      test="fight(ramon, slevin)",
-         *                      answer=True)
-         */
-        var result = Battle.fight(knight, warrior1);
-        assertTrue(result);
+        var result = Battle.fight(w1, w2);
+        assertEquals(result, test);
     }
 
     @Test
@@ -57,8 +54,8 @@ class WarriorFightTest {
          *                      test="bob.is_alive",
          *                      answer=True)
          */
-        Battle.fight(warrior1, warrior2);
-        assertTrue(warrior1.isAlive());
+        Battle.fight(warrior, warrior2);
+        assertTrue(warrior.isAlive());
     }
 
     @Test
@@ -72,7 +69,7 @@ class WarriorFightTest {
          *                      test="zeus.is_alive",
          *                      answer=True)
          */
-        Battle.fight(knight, warrior1);
+        Battle.fight(knight, warrior);
         assertTrue(knight.isAlive());
     }
 
@@ -87,7 +84,7 @@ class WarriorFightTest {
          *                      test="wife.is_alive",
          *                      answer=False)
          */
-        Battle.fight(warrior1, warrior2);
+        Battle.fight(warrior, warrior2);
         assertFalse(warrior2.isAlive());
     }
 
@@ -102,7 +99,7 @@ class WarriorFightTest {
          *                      test="knight.is_alive",
          *                      answer=True)
          */
-        Battle.fight(warrior1, knight);
+        Battle.fight(warrior, knight);
         assertTrue(knight.isAlive());
     }
 
@@ -118,7 +115,8 @@ class WarriorFightTest {
          *                      test="fight(unit_2, unit_3)",
          *                      answer=False)
          */
-        Battle.fight(warrior1, knight);
+        warrior2 = new Warrior();
+        Battle.fight(warrior, knight);
         var result = Battle.fight(knight, warrior2);
         assertFalse(result);
     }
