@@ -23,7 +23,7 @@ public class Warrior {
         enemy.setDamage(getAttack());
     }
 
-    private void setDamage(int damage) {
+    protected void setDamage(int damage) {
         health -= damage;
         if (health <= 0) {
             alive = false;
