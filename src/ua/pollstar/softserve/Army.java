@@ -1,23 +1,26 @@
 package ua.pollstar.softserve;
 
+import ua.pollstar.softserve.warriors.Warrior;
+import ua.pollstar.softserve.warriors.WarriorFactory;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Army {
     private final Queue<Warrior> troops = new LinkedList<>();
 
-    public void addUnit(Warrior.Type warrior, int count) {
+    public void addUnit(WarriorFactory.Type warrior, int count) {
         if (count <= 0) {
             return;
         }
         for (int i = 0; i < count; i++) {
-            troops.offer(Warrior.warriorFactory(warrior));
+            troops.offer(WarriorFactory.createWarrior(warrior));
         }
     }
 
     public void addUnit(Class <? extends Warrior> warrior, int count) {
         for (int i = 0; i < count; i++) {
-            troops.offer(Warrior.warriorFactory(warrior));
+            troops.offer(WarriorFactory.createWarrior(warrior));
         }
     }
 

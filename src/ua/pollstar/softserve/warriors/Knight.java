@@ -1,7 +1,7 @@
-package ua.pollstar.softserve;
+package ua.pollstar.softserve.warriors;
 
 public class Knight extends Warrior{
     public Knight() {
-        attack = 7;
+        setAttack(7);
     }
 }

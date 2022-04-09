@@ -1,5 +1,7 @@
 package ua.pollstar.softserve;
 
+import ua.pollstar.softserve.warriors.Warrior;
+
 public class Battle {
     public static boolean fight(Army army1, Army army2) {
         while (army1.isAlive() && army2.isAlive()) {

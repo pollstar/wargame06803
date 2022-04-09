@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import ua.pollstar.softserve.warriors.Defender;
+import ua.pollstar.softserve.warriors.Vampire;
+import ua.pollstar.softserve.warriors.Warrior;
 
 import java.util.stream.Stream;
 
@@ -77,5 +80,53 @@ class BattleArmyTest {
         army1.addUnit(Defender.class, 1);
         army2.addUnit(Warrior.class, 5);
         assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test11. Battle")
+    void battle11() {
+        army1.addUnit(Defender.class, 5);
+        army1.addUnit(Vampire.class, 6);
+        army1.addUnit(Warrior.class, 7);
+        army2.addUnit(Warrior.class, 6);
+        army2.addUnit(Defender.class, 6);
+        army2.addUnit(Vampire.class, 6);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test12. Battle")
+    void battle12() {
+        army1.addUnit(Defender.class, 2);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 4);
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 3);
+        army2.addUnit(Vampire.class, 3);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test13. Battle")
+    void battle13() {
+        army1.addUnit(Defender.class, 11);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 4);
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Vampire.class, 13);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test14. Battle")
+    void battle14() {
+        army1.addUnit(Defender.class, 9);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 8);
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Vampire.class, 13);
+        assertTrue(Battle.fight(army1, army2));
     }
 }

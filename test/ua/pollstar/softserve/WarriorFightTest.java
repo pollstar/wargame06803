@@ -3,47 +3,65 @@ package ua.pollstar.softserve;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import ua.pollstar.softserve.warriors.*;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class WarriorFightTest {
     private Warrior warrior1, warrior2;
     private Knight knight;
+    private Defender defender;
 
     @BeforeEach
-    void init () {
+    public void init ()
+    {
         warrior1 = new Warrior();
         warrior2 = new Warrior();
         knight = new Knight();
     }
 
-    @Test
-    @DisplayName("test fight between Warrior and Knight")
-    void fight1 () {
-        /*
-         *     "1. Fight": [
-         * carl = Warrior()
-         * jim = Knight()''',
-         *                      test="fight(carl, jim)",
-         *                      answer=False)
-        */
-        var result = Battle.fight(warrior1, knight);
-        assertFalse(result);
+    public class Rookie extends Warrior {
+        public Rookie() {
+            super();
+            setHealth(50);
+            setAttack(1);
+        }
     }
 
-    @Test
-    @DisplayName("test fight between Knight and Warrior")
-    void fight2 () {
-        /*
-         *     "2. Fight": [
-         * ramon = Knight()
-         * slevin = Warrior()''',
-         *                      test="fight(ramon, slevin)",
-         *                      answer=True)
-         */
-        var result = Battle.fight(knight, warrior1);
-        assertTrue(result);
+    private static Stream<Arguments> argumentsFightTwoWarrior() {
+        return Stream.of(
+                Arguments.of(Warrior.class, Warrior.class, true),
+                Arguments.of(Warrior.class, Knight.class, false),
+                Arguments.of(Warrior.class, Defender.class, false),
+                Arguments.of(Warrior.class, Vampire.class, true),
+                Arguments.of(Knight.class, Warrior.class, true),
+                Arguments.of(Knight.class, Knight.class, true),
+                Arguments.of(Knight.class, Defender.class, true),
+                Arguments.of(Knight.class, Vampire.class, true),
+                Arguments.of(Defender.class, Warrior.class, true),
+                Arguments.of(Defender.class, Defender.class, true),
+                Arguments.of(Defender.class, Knight.class, false),
+                Arguments.of(Defender.class, Vampire.class, true),
+                Arguments.of(Vampire.class, Warrior.class, true),
+                Arguments.of(Vampire.class, Defender.class, false),
+                Arguments.of(Vampire.class, Knight.class, false),
+                Arguments.of(Vampire.class, Vampire.class, true)
+//                Arguments.of(Rookie.class, Warrior.class, true)
+        );
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("argumentsFightTwoWarrior")
+    void fight (Class<? extends Warrior> warrior1, Class<? extends Warrior> warrior2, boolean test) {
+        var result = Battle.fight(WarriorFactory.createWarrior(warrior1),
+                                            WarriorFactory.createWarrior(warrior2));
+        assertEquals(result, test);
     }
 
     @Test
