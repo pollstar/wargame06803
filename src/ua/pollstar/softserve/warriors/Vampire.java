@@ -13,7 +13,7 @@ public class Vampire extends Warrior {
         this.vampirism = i;
     }
 
-    public int getVampirism() {
+    private int getVampirism() {
         return vampirism;
     }
 
