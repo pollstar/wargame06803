@@ -19,8 +19,6 @@ public class Battle {
     }
 
     public static boolean fight(Warrior warrior1, Warrior warrior2) {
-        log.info("Fight between " + warrior1.getClass().getSimpleName() + " and "
-                + warrior2.getClass().getSimpleName());
         while (warrior1.isAlive()) {
             warrior1.attackEnemy(warrior2);
             if (warrior2.isAlive()) {
@@ -45,15 +43,9 @@ public class Battle {
 
         while (enemy1.isAlive()) {
             if (lancer.isAlive()) {
-                log.info("Fight between " + lancer.getClass().getSimpleName() + " and "
-                        + enemy1.getClass().getSimpleName() +
-                        (enemy2 == null ? "" : " and " + enemy2.getClass().getSimpleName()));
                 lancer.attackEnemy(enemy1, enemy2);
             }
-
             if (enemy1.isAlive()) {
-                log.info("Fight between " + enemy1.getClass().getSimpleName() + " and "
-                        + lancer.getClass().getSimpleName());
                 enemy1.attackEnemy(lancer);
                 if (!lancer.isAlive()) {
                     return false;
