@@ -1,12 +1,16 @@
 package ua.pollstar.softserve.warriors;
 
 public class Vampire extends Warrior {
+    private static int maxHealth = 40;
+    private static int maxAttack = 4;
+    private static int maxVampirism = 50;
+
     private int vampirism;
 
     Vampire() {
-        setHealth(40);
-        setAttack(4);
-        setVampirism(50);
+        setHealth(maxHealth);
+        setAttack(maxAttack);
+        setVampirism(maxVampirism);
     }
 
     private void setVampirism(int i) {
@@ -17,6 +21,14 @@ public class Vampire extends Warrior {
         return vampirism;
     }
 
+    public static int getMaxVampirism() {
+        return maxVampirism;
+    }
+
+    public static void setMaxVampirism(int maxVampirism) {
+        Vampire.maxVampirism = maxVampirism;
+    }
+
     @Override
     public void attackEnemy(Warrior enemy) {
         if (enemy == null) {
@@ -25,6 +37,7 @@ public class Vampire extends Warrior {
         int healthEnemyBeforeAttack = enemy.getHealth();
         enemy.takeDamage(getAttack());
         final int percent = 100;
-        setHealth(getHealth() + (healthEnemyBeforeAttack - enemy.getHealth()) * getVampirism() / percent);
+        setHealth(Math.min(getHealth() + (healthEnemyBeforeAttack - enemy.getHealth()) * getVampirism()
+                / percent, maxHealth));
     }
 }

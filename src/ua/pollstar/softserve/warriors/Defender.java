@@ -1,12 +1,16 @@
 package ua.pollstar.softserve.warriors;
 
 public class Defender extends Warrior {
+    private static int maxHealth = 60;
+    private static int maxAttack = 3;
+    private static int maxDefense = 2;
+
     private int defense;
 
     public Defender() {
-        setHealth(60);
-        setDefense(2);
-        setAttack(3);
+        setHealth(maxHealth);
+        setDefense(maxDefense);
+        setAttack(maxAttack);
     }
 
     protected void takeDamage(int damage) {
@@ -22,5 +26,13 @@ public class Defender extends Warrior {
 
     private void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    public static int getMaxDefense() {
+        return maxDefense;
+    }
+
+    public static void setMaxDefense(int maxDefense) {
+        Defender.maxDefense = maxDefense;
     }
 }

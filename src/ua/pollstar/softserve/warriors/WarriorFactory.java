@@ -21,6 +21,7 @@ public class WarriorFactory {
             return constructor.newInstance();
         } catch (NoSuchMethodException | IllegalAccessException
                 | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
             return null;
         }
     }

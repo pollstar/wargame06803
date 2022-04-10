@@ -18,8 +18,7 @@ class WarriorFightTest {
     private Defender defender;
 
     @BeforeEach
-    public void init ()
-    {
+    public void init() {
         warrior1 = new Warrior();
         warrior2 = new Warrior();
         knight = new Knight();
@@ -58,15 +57,15 @@ class WarriorFightTest {
 
     @ParameterizedTest
     @MethodSource("argumentsFightTwoWarrior")
-    void fight (Class<? extends Warrior> warrior1, Class<? extends Warrior> warrior2, boolean test) {
+    void fight(Class<? extends Warrior> warrior1, Class<? extends Warrior> warrior2, boolean test) {
         var result = Battle.fight(WarriorFactory.createWarrior(warrior1),
-                                            WarriorFactory.createWarrior(warrior2));
+                WarriorFactory.createWarrior(warrior2));
         assertEquals(result, test);
     }
 
     @Test
     @DisplayName("test fight between Warrior isAlive and Warrior")
-    void fight3 () {
+    void fight3() {
         /*
          *     "3. Fight": [
          * bob = Warrior()
@@ -81,7 +80,7 @@ class WarriorFightTest {
 
     @Test
     @DisplayName("test fight between Knight isAlive and Warrior")
-    void fight4 () {
+    void fight4() {
         /*
          *     "4. Fight": [
          * zeus = Knight()
@@ -96,7 +95,7 @@ class WarriorFightTest {
 
     @Test
     @DisplayName("test fight between Warrior and Warrior is not Alive")
-    void fight5 () {
+    void fight5() {
         /*
          *     "5. Fight": [
          * husband = Warrior()
@@ -111,7 +110,7 @@ class WarriorFightTest {
 
     @Test
     @DisplayName("test fight between Warrior and Knight isAlive")
-    void fight6 () {
+    void fight6() {
         /*
          *     "6. Fight": [
          * dragon = Warrior()
@@ -126,7 +125,7 @@ class WarriorFightTest {
 
     @Test
     @DisplayName("test fight between Warrior - Knight and Knight - Warrior")
-    void fight7 () {
+    void fight7() {
         /*
          *     "7. Fight": [
          * unit_1 = Warrior()

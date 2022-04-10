@@ -3,6 +3,7 @@ package ua.pollstar.softserve;
 import ua.pollstar.softserve.warriors.Warrior;
 import ua.pollstar.softserve.warriors.WarriorFactory;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -18,7 +19,7 @@ public class Army {
         }
     }
 
-    public void addUnit(Class <? extends Warrior> warrior, int count) {
+    public void addUnit(Class<? extends Warrior> warrior, int count) {
         for (int i = 0; i < count; i++) {
             troops.offer(WarriorFactory.createWarrior(warrior));
         }
@@ -26,7 +27,23 @@ public class Army {
 
     public Warrior getWarrior() {
         if (isAlive()) {
-                return troops.peek();
+            return troops.peek();
+        }
+        return null;
+    }
+
+    public Warrior getWarriorBehind() {
+        if (isAlive()) {
+            Iterator<Warrior> itr = troops.iterator();
+            if (itr.hasNext()) {
+                itr.next();
+                while (itr.hasNext()) {
+                    Warrior nextWarrior = itr.next();
+                    if (nextWarrior.isAlive()) {
+                        return nextWarrior;
+                    }
+                }
+            }
         }
         return null;
     }

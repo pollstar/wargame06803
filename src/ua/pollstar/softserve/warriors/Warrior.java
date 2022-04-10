@@ -1,13 +1,18 @@
 package ua.pollstar.softserve.warriors;
 
+import java.util.logging.Logger;
+
 public class Warrior {
+    private static int maxHealth = 50;
+    private static int maxAttack = 5;
+
     private int health;
     private boolean alive = true;
     private int attack;
 
     public Warrior() {
-        setHealth(50);
-        setAttack(5);
+        setHealth(maxHealth);
+        setAttack(maxAttack);
     }
 
     public int getAttack() {
@@ -27,21 +32,26 @@ public class Warrior {
             return;
         }
         enemy.takeDamage(getAttack());
+        log.info(" - " + this.getClass().getSimpleName() + " attack " + getAttack()
+                + " to " + enemy.getClass().getSimpleName());
+        log.info("    - health " + enemy.getClass().getSimpleName() + " is " + enemy.getHealth());
     }
 
     protected void takeDamage(int damage) {
         int h = getHealth();
         h -= damage;
-        alive = h > 0;
         setHealth(h);
     }
 
     protected void setHealth(int health) {
-        this.health = Math.max(health, 0);
-        alive = this.health>0;
+        this.health = health;
+        alive = this.health > 0;
     }
 
     protected int getHealth() {
         return health;
     }
+
+    Logger log = Logger.getLogger(this.getClass().getName());
+
 }

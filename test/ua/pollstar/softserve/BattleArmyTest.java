@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import ua.pollstar.softserve.warriors.Defender;
-import ua.pollstar.softserve.warriors.Vampire;
-import ua.pollstar.softserve.warriors.Warrior;
+import ua.pollstar.softserve.warriors.*;
 
 import java.util.stream.Stream;
 
@@ -127,6 +125,63 @@ class BattleArmyTest {
         army2.addUnit(Warrior.class, 4);
         army2.addUnit(Defender.class, 4);
         army2.addUnit(Vampire.class, 13);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test15_0. Battle")
+    void battle15_0() {
+        army1.addUnit(Lancer.class, 1);
+        army2.addUnit(Warrior.class, 1);
+        army2.addUnit(Knight.class, 1);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test15. Battle")
+    void battle15() {
+        /**
+         * army_1.add_units(Lancer, 5)
+         * army_1.add_units(Vampire, 3)
+         * army_1.add_units(Warrior, 4)
+         * army_1.add_units(Defender, 2)
+         * army_2.add_units(Warrior, 4)
+         * army_2.add_units(Defender, 4)
+         * army_2.add_units(Vampire, 6)
+         * army_2.add_units(Lancer, 5)
+         */
+        army1.addUnit(Lancer.class, 5);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Defender.class, 2);
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 5);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test16. Battle")
+    void battle16() {
+        /**
+         * army_1.add_units(Lancer, 7)
+         * army_1.add_units(Vampire, 3)
+         * army_1.add_units(Warrior, 4)
+         * army_1.add_units(Defender, 2)
+         * army_2.add_units(Warrior, 4)
+         * army_2.add_units(Defender, 4)
+         * army_2.add_units(Vampire, 6)
+         * army_2.add_units(Lancer, 4)
+         */
+        army1.addUnit(Lancer.class, 7);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Defender.class, 2);
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 4);
         assertTrue(Battle.fight(army1, army2));
     }
 }
