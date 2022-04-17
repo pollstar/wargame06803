@@ -1,5 +1,7 @@
 package ua.pollstar.softserve.warriors;
 
+import ua.pollstar.softserve.Army;
+
 import java.util.logging.Logger;
 
 public class Warrior {
@@ -7,8 +9,9 @@ public class Warrior {
     private static int maxAttack = 5;
 
     private int health;
-    private boolean alive = true;
     private int attack;
+
+    private Army army = null;
 
     public Warrior() {
         setHealth(maxHealth);
@@ -24,7 +27,7 @@ public class Warrior {
     }
 
     public boolean isAlive() {
-        return alive;
+        return health > 0;
     }
 
     public void attackEnemy(Warrior enemy) {
@@ -32,9 +35,6 @@ public class Warrior {
             return;
         }
         enemy.takeDamage(getAttack());
-        log.info(" - " + this.getClass().getSimpleName() + " attack " + getAttack()
-                + " to " + enemy.getClass().getSimpleName());
-        log.info("    - health " + enemy.getClass().getSimpleName() + " is " + enemy.getHealth());
     }
 
     protected void takeDamage(int damage) {
@@ -45,7 +45,6 @@ public class Warrior {
 
     protected void setHealth(int health) {
         this.health = health;
-        alive = this.health > 0;
     }
 
     protected int getHealth() {
@@ -54,4 +53,23 @@ public class Warrior {
 
     Logger log = Logger.getLogger(this.getClass().getName());
 
+    public static void setHealthMax(int health) {
+        maxHealth = health;
+    }
+
+    public static int getMaxHealth(){
+        return maxHealth;
+    }
+
+    public Army getArmy() {
+        return army;
+    }
+
+    public void setArmy(Army inArmy) {
+        this.army = inArmy;
+    }
+
+    public boolean inArmy() {
+        return getArmy() != null;
+    }
 }

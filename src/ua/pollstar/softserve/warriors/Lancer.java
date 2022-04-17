@@ -10,22 +10,37 @@ public class Lancer extends Warrior {
         setAttack(maxAttack);
     }
 
-    public void attackEnemy(Warrior enemy1, Warrior enemy2) {
-        if (enemy1 == null) {
+    @Override
+    public void attackEnemy(Warrior enemy) {
+        if (enemy == null) {
             return;
         }
-        log.info(" - lancer attack " + getAttack() + " to " + enemy1.getClass().getSimpleName());
-        int healthEnemyBeforeAttack = enemy1.getHealth();
-        enemy1.takeDamage(getAttack());
-        log.info("    - health " + enemy1.getClass().getSimpleName() + " is " + enemy1.getHealth());
+
+        Warrior enemy2 = null;
+        if (enemy.inArmy()) {
+            enemy2 = enemy.getArmy().getWarriorBehind();
+        }
+
+        int healthEnemyBeforeAttack = enemy.getHealth();
+        enemy.takeDamage(getAttack());
+        if (enemy.getArmy() == null)  {
+            return;
+        }
         if (enemy2 == null) {
             return;
         }
 
         final int percent = 100;
-        int damage = (healthEnemyBeforeAttack - enemy1.getHealth()) * percentNextDamage / percent;
-        log.info(" - lancer attack " + damage + " to " + enemy2.getClass().getSimpleName());
+        int damage = (healthEnemyBeforeAttack - enemy.getHealth()) * percentNextDamage / percent;
         enemy2.takeDamage(damage);
-        log.info("    - health " + enemy2.getClass().getSimpleName() + " is " + enemy2.getHealth());
     }
+
+    public static void setHealthMax(int health) {
+        maxHealth = health;
+    }
+
+    public static int getMaxHealth(){
+        return maxHealth;
+    }
+
 }

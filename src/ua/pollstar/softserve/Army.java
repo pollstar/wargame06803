@@ -15,14 +15,27 @@ public class Army {
             return;
         }
         for (int i = 0; i < count; i++) {
-            troops.offer(WarriorFactory.createWarrior(warrior));
+            troops.offer(WarriorFactory.createWarrior(warrior, this));
         }
     }
 
     public void addUnit(Class<? extends Warrior> warrior, int count) {
         for (int i = 0; i < count; i++) {
-            troops.offer(WarriorFactory.createWarrior(warrior));
+            troops.offer(WarriorFactory.createWarrior(warrior, this));
         }
+    }
+
+    public static boolean fight(Warrior warrior1, Warrior warrior2) {
+        while (warrior1.isAlive()) {
+            warrior1.attackEnemy(warrior2);
+            if (warrior2.isAlive()) {
+                warrior2.attackEnemy(warrior1);
+            }
+            if (!warrior2.isAlive()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Warrior getWarrior() {

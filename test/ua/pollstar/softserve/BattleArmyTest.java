@@ -8,6 +8,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.pollstar.softserve.warriors.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,14 +26,163 @@ class BattleArmyTest {
     }
 
     private static Stream<Arguments> argumentsBattleTwoArms() {
-        return Stream.of(
+        Arguments[] arg = {
                 Arguments.of(Warrior.class, 1, Warrior.class, 2, false),
                 Arguments.of(Warrior.class, 2, Warrior.class, 3, false),
                 Arguments.of(Warrior.class, 5, Warrior.class, 7, false),
                 Arguments.of(Warrior.class, 20, Warrior.class, 21, true),
                 Arguments.of(Warrior.class, 10, Warrior.class, 11, true),
-                Arguments.of(Warrior.class, 11, Warrior.class, 7, true)
-        );
+                Arguments.of(Warrior.class, 11, Warrior.class, 7, true),
+                Arguments.of(Knight.class, 1, Warrior.class, 2, false),
+                Arguments.of(Knight.class, 2, Warrior.class, 3, false),
+                Arguments.of(Knight.class, 5, Warrior.class, 7, true),
+                Arguments.of(Knight.class, 20, Warrior.class, 21, true),
+                Arguments.of(Knight.class, 10, Warrior.class, 11, true),
+                Arguments.of(Knight.class, 11, Warrior.class, 7, true),
+                Arguments.of(Defender.class, 1, Warrior.class, 2, false),
+                Arguments.of(Defender.class, 2, Warrior.class, 3, false),
+                Arguments.of(Defender.class, 5, Warrior.class, 7, false),
+                Arguments.of(Defender.class, 20, Warrior.class, 21, true),
+                Arguments.of(Defender.class, 10, Warrior.class, 11, true),
+                Arguments.of(Defender.class, 11, Warrior.class, 7, true),
+                Arguments.of(Vampire.class, 1, Warrior.class, 2, false),
+                Arguments.of(Vampire.class, 2, Warrior.class, 3, false),
+                Arguments.of(Vampire.class, 5, Warrior.class, 7, false),
+                Arguments.of(Vampire.class, 20, Warrior.class, 21, true),
+                Arguments.of(Vampire.class, 10, Warrior.class, 11, true),
+                Arguments.of(Vampire.class, 11, Warrior.class, 7, true),
+                Arguments.of(Lancer.class, 1, Warrior.class, 2, false),
+                Arguments.of(Lancer.class, 2, Warrior.class, 3, true),
+                Arguments.of(Lancer.class, 5, Warrior.class, 7, true),
+                Arguments.of(Lancer.class, 20, Warrior.class, 21, true),
+                Arguments.of(Lancer.class, 10, Warrior.class, 11, true),
+                Arguments.of(Lancer.class, 11, Warrior.class, 7, true),
+
+                Arguments.of(Warrior.class, 1, Knight.class, 2, false),
+                Arguments.of(Warrior.class, 2, Knight.class, 3, false),
+                Arguments.of(Warrior.class, 5, Knight.class, 7, false),
+                Arguments.of(Warrior.class, 20, Knight.class, 21, false),
+                Arguments.of(Warrior.class, 10, Knight.class, 11, false),
+                Arguments.of(Warrior.class, 11, Knight.class, 7, true),
+                Arguments.of(Knight.class, 1, Knight.class, 2, false),
+                Arguments.of(Knight.class, 2, Knight.class, 3, false),
+                Arguments.of(Knight.class, 5, Knight.class, 7, false),
+                Arguments.of(Knight.class, 20, Knight.class, 21, true),
+                Arguments.of(Knight.class, 10, Knight.class, 11, true),
+                Arguments.of(Knight.class, 11, Knight.class, 7, true),
+                Arguments.of(Defender.class, 1, Knight.class, 2, false),
+                Arguments.of(Defender.class, 2, Knight.class, 3, false),
+                Arguments.of(Defender.class, 5, Knight.class, 7, false),
+                Arguments.of(Defender.class, 20, Knight.class, 21, false),
+                Arguments.of(Defender.class, 10, Knight.class, 11, false),
+                Arguments.of(Defender.class, 11, Knight.class, 7, true),
+                Arguments.of(Vampire.class, 1, Knight.class, 2, false),
+                Arguments.of(Vampire.class, 2, Knight.class, 3, false),
+                Arguments.of(Vampire.class, 5, Knight.class, 7, false),
+                Arguments.of(Vampire.class, 20, Knight.class, 21, false),
+                Arguments.of(Vampire.class, 10, Knight.class, 11, false),
+                Arguments.of(Vampire.class, 11, Knight.class, 7, true),
+                Arguments.of(Lancer.class, 1, Knight.class, 2, false),
+                Arguments.of(Lancer.class, 2, Knight.class, 3, false),
+                Arguments.of(Lancer.class, 5, Knight.class, 7, true),
+                Arguments.of(Lancer.class, 20, Knight.class, 21, true),
+                Arguments.of(Lancer.class, 10, Knight.class, 11, true),
+                Arguments.of(Lancer.class, 11, Knight.class, 7, true),
+
+                Arguments.of(Warrior.class, 1, Defender.class, 2, false),
+                Arguments.of(Warrior.class, 2, Defender.class, 3, false),
+                Arguments.of(Warrior.class, 5, Defender.class, 7, false),
+                Arguments.of(Warrior.class, 20, Defender.class, 21, false),
+                Arguments.of(Warrior.class, 10, Defender.class, 11, false),
+                Arguments.of(Warrior.class, 11, Defender.class, 7, true),
+                Arguments.of(Knight.class, 1, Defender.class, 2, false),
+                Arguments.of(Knight.class, 2, Defender.class, 3, true),
+                Arguments.of(Knight.class, 5, Defender.class, 7, true),
+                Arguments.of(Knight.class, 20, Defender.class, 21, true),
+                Arguments.of(Knight.class, 10, Defender.class, 11, true),
+                Arguments.of(Knight.class, 11, Defender.class, 7, true),
+                Arguments.of(Defender.class, 1, Defender.class, 2, false),
+                Arguments.of(Defender.class, 2, Defender.class, 3, false),
+                Arguments.of(Defender.class, 5, Defender.class, 7, false),
+                Arguments.of(Defender.class, 20, Defender.class, 21, false),
+                Arguments.of(Defender.class, 10, Defender.class, 11, false),
+                Arguments.of(Defender.class, 11, Defender.class, 7, true),
+                Arguments.of(Vampire.class, 1, Defender.class, 2, false),
+                Arguments.of(Vampire.class, 2, Defender.class, 3, false),
+                Arguments.of(Vampire.class, 5, Defender.class, 7, false),
+                Arguments.of(Vampire.class, 20, Defender.class, 21, false),
+                Arguments.of(Vampire.class, 10, Defender.class, 11, false),
+                Arguments.of(Vampire.class, 11, Defender.class, 7, true),
+                Arguments.of(Lancer.class, 1, Defender.class, 2, false),
+                Arguments.of(Lancer.class, 2, Defender.class, 3, false),
+                Arguments.of(Lancer.class, 5, Defender.class, 7, false),
+                Arguments.of(Lancer.class, 20, Defender.class, 21, true),
+                Arguments.of(Lancer.class, 10, Defender.class, 11, true),
+                Arguments.of(Lancer.class, 11, Defender.class, 7, true),
+                
+                Arguments.of(Warrior.class, 1, Vampire.class, 2, false),
+                Arguments.of(Warrior.class, 2, Vampire.class, 3, false),
+                Arguments.of(Warrior.class, 5, Vampire.class, 7, false),
+                Arguments.of(Warrior.class, 20, Vampire.class, 21, true),
+                Arguments.of(Warrior.class, 10, Vampire.class, 11, false),
+                Arguments.of(Warrior.class, 11, Vampire.class, 7, true),
+                Arguments.of(Knight.class, 1, Vampire.class, 2, false),
+                Arguments.of(Knight.class, 2, Vampire.class, 3, true),
+                Arguments.of(Knight.class, 5, Vampire.class, 7, true),
+                Arguments.of(Knight.class, 20, Vampire.class, 21, true),
+                Arguments.of(Knight.class, 10, Vampire.class, 11, true),
+                Arguments.of(Knight.class, 11, Vampire.class, 7, true),
+                Arguments.of(Defender.class, 1, Vampire.class, 2, false),
+                Arguments.of(Defender.class, 2, Vampire.class, 3, true),
+                Arguments.of(Defender.class, 5, Vampire.class, 7, true),
+                Arguments.of(Defender.class, 20, Vampire.class, 21, true),
+                Arguments.of(Defender.class, 10, Vampire.class, 11, true),
+                Arguments.of(Defender.class, 11, Vampire.class, 7, true),
+                Arguments.of(Vampire.class, 1, Vampire.class, 2, false),
+                Arguments.of(Vampire.class, 2, Vampire.class, 3, false),
+                Arguments.of(Vampire.class, 5, Vampire.class, 7, false),
+                Arguments.of(Vampire.class, 20, Vampire.class, 21, true),
+                Arguments.of(Vampire.class, 10, Vampire.class, 11, true),
+                Arguments.of(Vampire.class, 11, Vampire.class, 7, true),
+                Arguments.of(Lancer.class, 1, Vampire.class, 2, true),
+                Arguments.of(Lancer.class, 2, Vampire.class, 3, true),
+                Arguments.of(Lancer.class, 5, Vampire.class, 7, true),
+                Arguments.of(Lancer.class, 20, Vampire.class, 21, true),
+                Arguments.of(Lancer.class, 10, Vampire.class, 11, true),
+                Arguments.of(Lancer.class, 11, Vampire.class, 7, true),
+
+                Arguments.of(Warrior.class, 1, Lancer.class, 2, false),
+                Arguments.of(Warrior.class, 2, Lancer.class, 3, false),
+                Arguments.of(Warrior.class, 5, Lancer.class, 7, false),
+                Arguments.of(Warrior.class, 20, Lancer.class, 21, false),
+                Arguments.of(Warrior.class, 10, Lancer.class, 11, false),
+                Arguments.of(Warrior.class, 11, Lancer.class, 7, true),
+                Arguments.of(Knight.class, 1, Lancer.class, 2, false),
+                Arguments.of(Knight.class, 2, Lancer.class, 3, false),
+                Arguments.of(Knight.class, 5, Lancer.class, 7, false),
+                Arguments.of(Knight.class, 20, Lancer.class, 21, false),
+                Arguments.of(Knight.class, 10, Lancer.class, 11, false),
+                Arguments.of(Knight.class, 11, Lancer.class, 7, true),
+                Arguments.of(Defender.class, 1, Lancer.class, 2, false),
+                Arguments.of(Defender.class, 2, Lancer.class, 3, false),
+                Arguments.of(Defender.class, 5, Lancer.class, 7, false),
+                Arguments.of(Defender.class, 20, Lancer.class, 21, false),
+                Arguments.of(Defender.class, 10, Lancer.class, 11, false),
+                Arguments.of(Defender.class, 11, Lancer.class, 7, true),
+                Arguments.of(Vampire.class, 1, Lancer.class, 2, false),
+                Arguments.of(Vampire.class, 2, Lancer.class, 3, false),
+                Arguments.of(Vampire.class, 5, Lancer.class, 7, false),
+                Arguments.of(Vampire.class, 20, Lancer.class, 21, false),
+                Arguments.of(Vampire.class, 10, Lancer.class, 11, false),
+                Arguments.of(Vampire.class, 11, Lancer.class, 7, false),
+                Arguments.of(Lancer.class, 1, Lancer.class, 2, false),
+                Arguments.of(Lancer.class, 2, Lancer.class, 3, false),
+                Arguments.of(Lancer.class, 5, Lancer.class, 7, false),
+                Arguments.of(Lancer.class, 20, Lancer.class, 21, true),
+                Arguments.of(Lancer.class, 10, Lancer.class, 11, true),
+                Arguments.of(Lancer.class, 11, Lancer.class, 7, true)
+        };
+        return Stream.of(arg);
     }
 
     @ParameterizedTest
@@ -174,6 +327,7 @@ class BattleArmyTest {
          * army_2.add_units(Vampire, 6)
          * army_2.add_units(Lancer, 4)
          */
+
         army1.addUnit(Lancer.class, 7);
         army1.addUnit(Vampire.class, 3);
         army1.addUnit(Warrior.class, 4);

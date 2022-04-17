@@ -38,18 +38,27 @@ class WarriorFightTest {
                 Arguments.of(Warrior.class, Knight.class, false),
                 Arguments.of(Warrior.class, Defender.class, false),
                 Arguments.of(Warrior.class, Vampire.class, true),
+                Arguments.of(Warrior.class, Lancer.class, false),
                 Arguments.of(Knight.class, Warrior.class, true),
                 Arguments.of(Knight.class, Knight.class, true),
                 Arguments.of(Knight.class, Defender.class, true),
                 Arguments.of(Knight.class, Vampire.class, true),
+                Arguments.of(Knight.class, Lancer.class, true),
                 Arguments.of(Defender.class, Warrior.class, true),
                 Arguments.of(Defender.class, Defender.class, true),
                 Arguments.of(Defender.class, Knight.class, false),
                 Arguments.of(Defender.class, Vampire.class, true),
+                Arguments.of(Defender.class, Lancer.class, false),
                 Arguments.of(Vampire.class, Warrior.class, true),
                 Arguments.of(Vampire.class, Defender.class, false),
                 Arguments.of(Vampire.class, Knight.class, false),
-                Arguments.of(Vampire.class, Vampire.class, true)
+                Arguments.of(Vampire.class, Vampire.class, true),
+                Arguments.of(Vampire.class, Lancer.class, false),
+                Arguments.of(Lancer.class, Warrior.class, true),
+                Arguments.of(Lancer.class, Defender.class, true),
+                Arguments.of(Lancer.class, Knight.class, false),
+                Arguments.of(Lancer.class, Vampire.class, true),
+                Arguments.of(Lancer.class, Lancer.class, true)
 //                Arguments.of(Rookie.class, Warrior.class, true)
         );
     }
@@ -61,6 +70,13 @@ class WarriorFightTest {
         var result = Battle.fight(WarriorFactory.createWarrior(warrior1),
                 WarriorFactory.createWarrior(warrior2));
         assertEquals(result, test);
+    }
+
+    @Test
+    void fight() {
+        var result = Battle.fight(WarriorFactory.createWarrior(Warrior.class),
+                WarriorFactory.createWarrior(Lancer.class));
+        assertFalse(result);
     }
 
     @Test
