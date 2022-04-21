@@ -2,10 +2,15 @@ package ua.pollstar.softserve;
 
 import ua.pollstar.softserve.warriors.Warrior;
 
+import java.util.Iterator;
+
 public class Battle {
     public static boolean fight(Army army1, Army army2) {
+        army1.dispatcherOn();
+        army2.dispatcherOn();
+
         while (army1.isAlive() && army2.isAlive()) {
-            Army.fight(army1.getWarrior(), army2.getWarrior());
+            fight(army1.getWarrior(), army2.getWarrior());
         }
         return army1.isAlive();
     }
@@ -21,5 +26,18 @@ public class Battle {
             }
         }
         return false;
+    }
+
+    public static boolean straight_fight (Army army1, Army army2) {
+        army1.dispatcherOff();
+        army2.dispatcherOff();
+        while (army1.isAlive() && army2.isAlive()) {
+            Iterator<Warrior> it1 = army1.iterator();
+            Iterator<Warrior> it2 = army2.iterator();
+            while (it1.hasNext() && it2.hasNext()) {
+                fight(it1.next(), it2.next());
+            }
+        }
+        return army1.isAlive();
     }
 }

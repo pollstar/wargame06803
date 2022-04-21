@@ -10,7 +10,8 @@ public class WarriorFactory {
         KNIGHT,
         DEFENDER,
         VAMPIRE,
-        LANCER
+        LANCER,
+        HEALER
     }
 
     public static Warrior createWarrior(Type type) {
@@ -20,6 +21,7 @@ public class WarriorFactory {
             case DEFENDER -> new Defender();
             case VAMPIRE -> new Vampire();
             case LANCER -> new Lancer();
+            case HEALER -> new Healer();
         };
     }
 
@@ -28,6 +30,7 @@ public class WarriorFactory {
         warrior.setArmy(army);
         return warrior;
     }
+
     public static Warrior createWarrior(Class<? extends Warrior> warriorClass) {
         try {
             var constructor = warriorClass.getDeclaredConstructor();
@@ -41,7 +44,10 @@ public class WarriorFactory {
 
     public static Warrior createWarrior(Class<? extends Warrior> warriorClass, Army army) {
         var warrior = createWarrior(warriorClass);
+        assert warrior != null;
         warrior.setArmy(army);
         return warrior;
     }
+
+
 }

@@ -1,41 +1,32 @@
 package ua.pollstar.softserve;
 
+import ua.pollstar.softserve.warriors.Healer;
 import ua.pollstar.softserve.warriors.Warrior;
 import ua.pollstar.softserve.warriors.WarriorFactory;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.function.Consumer;
 
-public class Army {
-    private final Queue<Warrior> troops = new LinkedList<>();
+public class Army implements Iterable<Warrior> {
+    private final LinkedList<Warrior> troops = new LinkedList<>();
+    public boolean dispatcherWork = true;
 
     public void addUnit(WarriorFactory.Type warrior, int count) {
         if (count <= 0) {
             return;
         }
         for (int i = 0; i < count; i++) {
-            troops.offer(WarriorFactory.createWarrior(warrior, this));
+            troops.addLast(WarriorFactory.createWarrior(warrior, this));
         }
     }
 
     public void addUnit(Class<? extends Warrior> warrior, int count) {
         for (int i = 0; i < count; i++) {
-            troops.offer(WarriorFactory.createWarrior(warrior, this));
+            troops.addLast(WarriorFactory.createWarrior(warrior, this));
         }
-    }
-
-    public static boolean fight(Warrior warrior1, Warrior warrior2) {
-        while (warrior1.isAlive()) {
-            warrior1.attackEnemy(warrior2);
-            if (warrior2.isAlive()) {
-                warrior2.attackEnemy(warrior1);
-            }
-            if (!warrior2.isAlive()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Warrior getWarrior() {
@@ -62,13 +53,54 @@ public class Army {
     }
 
     public boolean isAlive() {
-        while (!troops.isEmpty()) {
-            if (troops.peek().isAlive()) {
-                return true;
-            } else {
-                troops.poll();
+        removeDead();
+        return  !troops.isEmpty();
+    }
+
+    private void removeDead() {
+        var it = troops.iterator();
+        while (it.hasNext()){
+            if (!it.next().isAlive()) {
+                it.remove();
             }
         }
-        return false;
+    }
+
+    @Override
+    public Iterator<Warrior> iterator() {
+        return troops.iterator();
+    }
+
+    public void dispatcherOn() {
+        dispatcherWork = true;
+    }
+
+    public void dispatcherOff() {
+        dispatcherWork = false;
+    }
+
+    public void needHeal(Warrior warrior) {
+        if (dispatcherWork) {
+            var index = troops.indexOf(warrior);
+            if (index >= troops.size()-1) {
+                return;
+            }
+            Warrior healer;
+            if ((healer = troops.get(index + 1)).getClass() ==
+                    Healer.class) {
+                ((Healer) healer).heal(warrior);
+            }
+        }
+
+    }
+
+    public void takeDamageForNext(Warrior warrior, int damage) {
+        if (dispatcherWork) {
+            var index = troops.indexOf(warrior);
+            if (index >= troops.size()-1) {
+                return;
+            }
+            troops.get(index + 1).takeDamage(damage);
+        }
     }
 }

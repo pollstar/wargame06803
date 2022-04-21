@@ -8,10 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.pollstar.softserve.warriors.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -230,7 +226,8 @@ class BattleArmyTest {
         army1.addUnit(Warrior.class, 1);
         army1.addUnit(Defender.class, 1);
         army2.addUnit(Warrior.class, 5);
-        assertFalse(Battle.fight(army1, army2));
+        var result = Battle.fight(army1, army2);
+        assertFalse(result);
     }
 
     @Test
@@ -293,7 +290,7 @@ class BattleArmyTest {
     @Test
     @DisplayName("Test15. Battle")
     void battle15() {
-        /**
+        /*
          * army_1.add_units(Lancer, 5)
          * army_1.add_units(Vampire, 3)
          * army_1.add_units(Warrior, 4)
@@ -317,7 +314,7 @@ class BattleArmyTest {
     @Test
     @DisplayName("Test16. Battle")
     void battle16() {
-        /**
+        /*
          * army_1.add_units(Lancer, 7)
          * army_1.add_units(Vampire, 3)
          * army_1.add_units(Warrior, 4)
@@ -338,4 +335,39 @@ class BattleArmyTest {
         army2.addUnit(Lancer.class, 4);
         assertTrue(Battle.fight(army1, army2));
     }
+
+    @Test
+    @DisplayName("battleLancerVsWarriorWithHealer")
+    void battleLancerVsWarriorWithHealer() {
+        army1.addUnit(Lancer.class, 1);
+        army2.addUnit(Warrior.class, 1);
+        army2.addUnit(Healer.class, 1);
+        var result = Battle.fight(army1, army2);
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("battleWarriorVsWarrior")
+    void battleWarriorVsWarrior() {
+        army1.addUnit(Warrior.class, 1);
+        army2.addUnit(Warrior.class, 1);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+
+    @Test
+    @DisplayName("battleWarriorVsWarrior")
+    void battleWarriorVsVampire() {
+        army1.addUnit(Warrior.class, 1);
+        army2.addUnit(Vampire.class, 1);
+        assertTrue(Battle.fight(army1, army2));
+//        if (army1.isAlive()) {
+//            System.out.println("Warrior in army1 is:" + army1.getWarrior().getClass().getSimpleName());
+//            System.out.println("       health: " + army1.getWarrior().getHealth());
+//        } else if (army2.isAlive()) {
+//            System.out.println("Warrior in army2 is:" + army2.getWarrior().getClass().getSimpleName());
+//            System.out.println("       health: " + army2.getWarrior().getHealth());
+//        }
+    }
+
 }
