@@ -6,8 +6,8 @@ import java.util.Iterator;
 
 public class Battle {
     public static boolean fight(Army army1, Army army2) {
-        army1.dispatcherOn();
-        army2.dispatcherOn();
+        army1.straightFightOn();
+        army2.straightFightOn();
 
         while (army1.isAlive() && army2.isAlive()) {
             fight(army1.getWarrior(), army2.getWarrior());
@@ -29,8 +29,8 @@ public class Battle {
     }
 
     public static boolean straight_fight (Army army1, Army army2) {
-        army1.dispatcherOff();
-        army2.dispatcherOff();
+        army1.straightFightOff();
+        army2.straightFightOff();
         while (army1.isAlive() && army2.isAlive()) {
             Iterator<Warrior> it1 = army1.iterator();
             Iterator<Warrior> it2 = army2.iterator();

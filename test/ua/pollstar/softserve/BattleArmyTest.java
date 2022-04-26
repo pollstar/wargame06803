@@ -343,7 +343,7 @@ class BattleArmyTest {
         army2.addUnit(Warrior.class, 1);
         army2.addUnit(Healer.class, 1);
         var result = Battle.fight(army1, army2);
-        assertFalse(result);
+            assertTrue(result);
     }
 
     @Test

@@ -36,22 +36,6 @@ public class Army implements Iterable<Warrior> {
         return null;
     }
 
-    public Warrior getWarriorBehind() {
-        if (isAlive()) {
-            Iterator<Warrior> itr = troops.iterator();
-            if (itr.hasNext()) {
-                itr.next();
-                while (itr.hasNext()) {
-                    Warrior nextWarrior = itr.next();
-                    if (nextWarrior.isAlive()) {
-                        return nextWarrior;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     public boolean isAlive() {
         removeDead();
         return  !troops.isEmpty();
@@ -71,11 +55,24 @@ public class Army implements Iterable<Warrior> {
         return troops.iterator();
     }
 
-    public void dispatcherOn() {
+    class iteratorStraightFight implements Iterator {
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return null;
+        }
+    }
+
+    public void straightFightOn() {
         dispatcherWork = true;
     }
 
-    public void dispatcherOff() {
+    public void straightFightOff() {
         dispatcherWork = false;
     }
 
@@ -103,4 +100,6 @@ public class Army implements Iterable<Warrior> {
             troops.get(index + 1).takeDamage(damage);
         }
     }
+
+
 }
