@@ -31,7 +31,19 @@ public class Vampire extends Warrior {
     @Override
     public void attackEnemy(Warrior enemy) {
         int healthEnemyBeforeAttack = enemy.getHealth();
-        enemy.takeDamage(getAttack());
+        super.attackEnemy(enemy);
+        final int percent = 100;
+        setHealth(getHealth() + (healthEnemyBeforeAttack - enemy.getHealth()) * getVampirism()
+                / percent);
+    }
+
+    @Override
+    public void attackEnemyInStraightFight(Warrior enemy) {
+        if (enemy == null) {
+            return;
+        }
+        int healthEnemyBeforeAttack = enemy.getHealth();
+        super.attackEnemyInStraightFight(enemy);
         final int percent = 100;
         setHealth(getHealth() + (healthEnemyBeforeAttack - enemy.getHealth()) * getVampirism()
                 / percent);

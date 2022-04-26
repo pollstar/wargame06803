@@ -38,14 +38,19 @@ public class Warrior implements Handler {
         if (enemy == null) {
             return;
         }
-        enemy.takeDamage(getAttack());
+        this.handler(this, EventsType.NEED_HEAL, 0);
+        enemy.handler(this, EventsType.TAKE_ATTACK, getAttack());
+    }
+
+    public void attackEnemyInStraightFight(Warrior enemy) {
+        if (enemy == null) {
+            return;
+        }
+        enemy.handler(this, EventsType.TAKE_ATTACK, getAttack());
     }
 
     public void takeDamage(int damage) {
         setHealth(getHealth() - damage);
-        if (isAlive() && army != null) {
-            army.needHeal(this);
-        }
     }
 
     protected void setHealth(int health) {
@@ -94,14 +99,19 @@ public class Warrior implements Handler {
     }
 
     @Override
-    public void handle(EventsType event, int value) {
-        if (event == EventsType.DAMAGE) {
+    public Handler getNext() {
+        return next;
+    }
+
+    @Override
+    public void handler(Warrior ownerEvent, EventsType event, int value) {
+        if (event == EventsType.TAKE_ATTACK) {
             takeDamage(value);
         } else if(next != null) {
-            if (event == EventsType.DAMAGE_FOR_NEXT) {
-                next.handle(EventsType.DAMAGE, value);
+            if (event == EventsType.TAKE_ATTACK_FOR_NEXT) {
+                next.handler(this, EventsType.TAKE_ATTACK, value);
             } else {
-                next.handle(event, value);
+                next.handler(this, event, value);
             }
         }
     }

@@ -1,8 +1,9 @@
 package ua.pollstar.softserve.eventhandling;
 
-public interface Handler {
-    int value = 0;
+import ua.pollstar.softserve.warriors.Warrior;
 
+public interface Handler {
     void setNext(Handler handler);
-    void handle(EventsType event, int value);
+    Handler getNext();
+    void handler(Warrior ownerEvent, EventsType event, int value);
 }

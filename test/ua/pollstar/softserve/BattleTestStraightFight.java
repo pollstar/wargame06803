@@ -2,7 +2,6 @@ package ua.pollstar.softserve;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import teststatic.A;
 import ua.pollstar.softserve.warriors.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +20,7 @@ class BattleTestStraightFight {
         army1.addUnit(Warrior.class, 2);
         army2.addUnit(Warrior.class, 2);
 
-        var result = Battle.straight_fight(army1, army2);
+        var result = Battle.straightFight(army1, army2);
         assertTrue(result);
     }
 
@@ -31,7 +30,7 @@ class BattleTestStraightFight {
         army2.addUnit(Warrior.class, 2);
         army2.addUnit(Knight.class, 1);
 
-        var result = Battle.straight_fight(army1, army2);
+        var result = Battle.straightFight(army1, army2);
         assertFalse(result);
     }
 
@@ -41,7 +40,7 @@ class BattleTestStraightFight {
         army2.addUnit(Warrior.class, 2);
         army2.addUnit(Knight.class, 1);
 
-        var result = Battle.straight_fight(army1, army2);
+        var result = Battle.straightFight(army1, army2);
         assertTrue(result);
     }
 
@@ -51,7 +50,7 @@ class BattleTestStraightFight {
         army2.addUnit(Healer.class, 1);
         army2.addUnit(Warrior.class, 2);
 
-        var result = Battle.straight_fight(army1, army2);
+        var result = Battle.straightFight(army1, army2);
         assertTrue(result);
     }
 
@@ -61,7 +60,7 @@ class BattleTestStraightFight {
         army2.addUnit(Lancer.class, 1);
         army2.addUnit(Warrior.class, 2);
 
-        var result = Battle.straight_fight(army1, army2);
+        var result = Battle.straightFight(army1, army2);
         assertTrue(result);
     }
 }

@@ -1,5 +1,7 @@
 package ua.pollstar.softserve.warriors;
 
+import ua.pollstar.softserve.eventhandling.EventsType;
+
 public class Lancer extends Warrior {
     private int percentNextDamage;
 
@@ -11,11 +13,11 @@ public class Lancer extends Warrior {
     @Override
     public void attackEnemy(Warrior enemy) {
         int healthEnemyBeforeAttack = enemy.getHealth();
-        enemy.takeDamage(getAttack());
+        super.attackEnemy(enemy);
         final int percent = 100;
         int damage = (healthEnemyBeforeAttack - enemy.getHealth()) * percentNextDamage / percent;
         if (enemy.getArmy() != null){
-            enemy.getArmy().takeDamageForNext(enemy, damage);
+            enemy.handler(this, EventsType.TAKE_ATTACK_FOR_NEXT, damage);
         }
     }
 }

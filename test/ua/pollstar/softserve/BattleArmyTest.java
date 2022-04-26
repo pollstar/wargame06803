@@ -343,7 +343,19 @@ class BattleArmyTest {
         army2.addUnit(Warrior.class, 1);
         army2.addUnit(Healer.class, 1);
         var result = Battle.fight(army1, army2);
-            assertTrue(result);
+        //TODO: check it
+            assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("battleLancerVsWarriorWithTwoHealer")
+    void battleLancerVsWarriorWithTwoHealer() {
+        army1.addUnit(Lancer.class, 1);
+        army2.addUnit(Warrior.class, 1);
+        army2.addUnit(Healer.class, 2);
+        var result = Battle.fight(army1, army2);
+        //TODO: check it
+        assertFalse(result);
     }
 
     @Test

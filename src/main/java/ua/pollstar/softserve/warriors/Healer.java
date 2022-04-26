@@ -1,8 +1,10 @@
 package ua.pollstar.softserve.warriors;
 
+import ua.pollstar.softserve.eventhandling.EventsType;
+import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.weapons.Weapon;
 
-public class Healer extends Warrior {
+public class Healer extends Warrior implements Handler {
     private int maxHealOneTime;
     private int healOneTime;
     private int countHeals = 50;
@@ -13,7 +15,7 @@ public class Healer extends Warrior {
     }
 
     public void heal(Warrior warrior) {
-        if ((countHeals--) > 0) {
+        if ((countHeals--) > 0 && warrior.isAlive()) {
             warrior.setHealth(warrior.getHealth() + healOneTime);
         }
     }
@@ -40,5 +42,15 @@ public class Healer extends Warrior {
 
         setMaxHeal(getMaxHeal() + weapon.getHeal());
         setHeal(getHeal() + weapon.getHeal());
+    }
+
+    @Override
+    public void handler(Warrior ownerEvent, EventsType event, int value) {
+        if (event == EventsType.NEED_HEAL) {
+            if (getArmy() != null && getArmy() == ownerEvent.getArmy()) {
+                heal(ownerEvent);
+            }
+        }
+        super.handler(this, event, value);
     }
 }
