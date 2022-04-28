@@ -1,6 +1,7 @@
 package ua.pollstar.softserve.warriors;
 
 import ua.pollstar.softserve.Army;
+import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.EventsType;
 import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.weapons.Weapon;
@@ -38,15 +39,15 @@ public class Warrior implements Handler {
         if (enemy == null) {
             return;
         }
-        this.handler(this, EventsType.NEED_HEAL, 0);
-        enemy.handler(this, EventsType.TAKE_ATTACK, getAttack());
+        this.handler(new Event(this, EventsType.NEED_HEAL, 0));
+        enemy.handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
     }
 
     public void attackEnemyInStraightFight(Warrior enemy) {
         if (enemy == null) {
             return;
         }
-        enemy.handler(this, EventsType.TAKE_ATTACK, getAttack());
+        enemy.handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
     }
 
     public void takeDamage(int damage) {
@@ -104,14 +105,14 @@ public class Warrior implements Handler {
     }
 
     @Override
-    public void handler(Warrior ownerEvent, EventsType event, int value) {
-        if (event == EventsType.TAKE_ATTACK) {
-            takeDamage(value);
+    public void handler(Event event) {
+        if (event.getEvent() == EventsType.TAKE_ATTACK) {
+            takeDamage(event.getValue());
         } else if(next != null) {
-            if (event == EventsType.TAKE_ATTACK_FOR_NEXT) {
-                next.handler(this, EventsType.TAKE_ATTACK, value);
+            if (event.getEvent() == EventsType.TAKE_ATTACK_FOR_NEXT) {
+                next.handler(new Event(this, EventsType.TAKE_ATTACK, event.getValue()));
             } else {
-                next.handler(this, event, value);
+                next.handler(new Event(this, event.getEvent(), event.getValue()));
             }
         }
     }

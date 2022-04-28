@@ -33,8 +33,13 @@ public class ParametersWarrior {
             Healer.class, Map.of(
                     Parameter.HEALTH, 60,
                     Parameter.ATTACK, 0,
-                    Parameter.HEAL, 2)
-    );
+                    Parameter.HEAL, 2),
+            Warlord.class, Map.of(
+                    Parameter.HEALTH, 100,
+                    Parameter.ATTACK, 4,
+                    Parameter.DEFENSE, 2)
+
+            );
 
     public static Map<Parameter, Integer> getParameters(Class<? extends Warrior> warrior) {
         return parameters.get(warrior);

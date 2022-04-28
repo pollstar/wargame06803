@@ -1,5 +1,6 @@
 package ua.pollstar.softserve.warriors;
 
+import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.EventsType;
 import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.weapons.Weapon;
@@ -45,12 +46,13 @@ public class Healer extends Warrior implements Handler {
     }
 
     @Override
-    public void handler(Warrior ownerEvent, EventsType event, int value) {
-        if (event == EventsType.NEED_HEAL) {
-            if (getArmy() != null && getArmy() == ownerEvent.getArmy()) {
-                heal(ownerEvent);
+    public void handler(Event event) {
+        if (event.getEvent() == EventsType.NEED_HEAL) {
+            if (getArmy() != null && getArmy() == event.getOwnerEvent().getArmy()) {
+                heal(event.getOwnerEvent());
             }
         }
-        super.handler(this, event, value);
+        event.setOwnerEvent(this);
+        super.handler(event);
     }
 }

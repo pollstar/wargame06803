@@ -3,10 +3,7 @@ package ua.pollstar.softserve;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ua.pollstar.softserve.warriors.Defender;
-import ua.pollstar.softserve.warriors.Lancer;
-import ua.pollstar.softserve.warriors.Warrior;
-import ua.pollstar.softserve.warriors.WarriorFactory;
+import ua.pollstar.softserve.warriors.*;
 import ua.pollstar.softserve.weapons.Weapon;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +26,25 @@ class ArmyTest {
         assertTrue(army.isAlive());
         army.addUnit(Defender.class, 1);
         assertTrue(army.isAlive());
+    }
+
+    @Test
+    void addUnitWarlord() {
+        army.addUnit(Warlord.class, 1);
+        army.addUnit(Warrior.class, 3);
+        army.addUnit(Lancer.class, 2);
+        army.addUnit(Defender.class, 1);
+
+        int count = 0;
+        for (var it : army) {
+            count++;
+        }
+
+        army.addUnit(Warlord.class, 2);
+        for (var it : army) {
+            count--;
+        }
+        assertEquals(0, count);
     }
 
     @Test

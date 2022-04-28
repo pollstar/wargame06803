@@ -1,6 +1,7 @@
 package ua.pollstar.softserve;
 
 import ua.pollstar.softserve.eventhandling.Handler;
+import ua.pollstar.softserve.warriors.Warlord;
 import ua.pollstar.softserve.warriors.Warrior;
 import ua.pollstar.softserve.warriors.WarriorFactory;
 
@@ -24,11 +25,23 @@ public class Army implements Iterable<Warrior> {
     public void addUnit(Class<? extends Warrior> warrior, int count) {
         for (int i = 0; i < count; i++) {
             Warrior w = WarriorFactory.createWarrior(warrior, this);
+            if (searchWarlord(w)) return;
             if (!troops.isEmpty()) {
                 troops.peekLast().setNext(w);
             }
             troops.addLast(w);
         }
+    }
+
+    private boolean searchWarlord(Warrior w) {
+        if (w.getClass() == Warlord.class) {
+            for (Warrior k : troops) {
+                if (k.getClass() == Warlord.class) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Warrior getWarrior() {
