@@ -7,6 +7,8 @@ import java.util.Iterator;
 public class Battle {
     public static boolean fight(Army army1, Army army2) {
         while (army1.isAlive() && army2.isAlive()) {
+            army1.moveUnits();
+            army2.moveUnits();
             fight(army1.getWarrior(), army2.getWarrior());
         }
         return army1.isAlive();
