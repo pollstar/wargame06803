@@ -1,5 +1,6 @@
 package ua.pollstar.softserve;
 
+import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.warriors.*;
 
@@ -19,7 +20,6 @@ public class Army implements Iterable<Warrior> {
         }
         for (int i = 0; i < count; i++) {
             Warrior w = WarriorFactory.createWarrior(warrior, this);
-            troops.peekLast().setNext(w);
             troops.addLast(w);
         }
     }
@@ -29,9 +29,6 @@ public class Army implements Iterable<Warrior> {
             Warrior w = WarriorFactory.createWarrior(warrior, this);
             if (w.getClass() == Warlord.class && searchWarlord() != null) {
                 return;
-            }
-            if (!troops.isEmpty()) {
-                troops.peekLast().setNext(w);
             }
             troops.addLast(w);
         }
@@ -63,24 +60,8 @@ public class Army implements Iterable<Warrior> {
     }
 
     public boolean isAlive() {
-        removeDead();
+        troops.removeIf(warrior -> !warrior.isAlive());
         return !troops.isEmpty();
-    }
-
-    private void removeDead() {
-        var it = troops.iterator();
-        var prev = troops.peekFirst();
-        Handler next;
-        while (it.hasNext()) {
-            var warrior = it.next();
-            if (!warrior.isAlive()) {
-                next = warrior.getNext();
-                prev.setNext(next);
-                it.remove();
-            } else {
-                prev = warrior;
-            }
-        }
     }
 
     @Override
@@ -107,12 +88,26 @@ public class Army implements Iterable<Warrior> {
     @Override
     public String toString() {
         ArrayList<String> warriors = new ArrayList<>();
-        for (Warrior w: troops) {
+        for (Warrior w : troops) {
             warriors.add(w.getClass().getSimpleName());
         }
 
         return "Army{" +
                 "troops=" + warriors +
                 '}';
+    }
+
+    public void handler(Event event) {
+        var it = troops.iterator();
+        Event callbackEvent = null;
+        if (it.hasNext()) {
+            callbackEvent = it.next().handler(event);
+            while (it.hasNext()) {
+                if (callbackEvent == null) {
+                    return;
+                }
+                callbackEvent = it.next().handler(callbackEvent);
+            }
+        }
     }
 }

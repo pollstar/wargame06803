@@ -1,12 +1,12 @@
 package ua.pollstar.softserve.warriors;
 
 import ua.pollstar.softserve.Army;
+
 import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.EventsType;
-import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.weapons.Weapon;
 
-public class Warrior implements Handler {
+public class Warrior{
     private int maxHealth;
     private int maxAttack;
 
@@ -14,7 +14,6 @@ public class Warrior implements Handler {
     private int attack;
 
     private Army army = null;
-    Handler next = null;
 
     public Warrior() {
         setMaxHealth(ParametersWarrior.getParameter(this.getClass(), ParametersWarrior.Parameter.HEALTH));
@@ -39,8 +38,8 @@ public class Warrior implements Handler {
         if (enemy == null) {
             return;
         }
-        this.handler(new Event(this, EventsType.NEED_HEAL, 0));
-        enemy.handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
+        army.handler(new Event(this, EventsType.NEED_HEAL, 0));
+        enemy.getArmy().handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
     }
 
     public void attackEnemyInStraightFight(Warrior enemy) {
@@ -94,26 +93,16 @@ public class Warrior implements Handler {
         setAttack(getAttack() + weapon.getAttack());
     }
 
-    @Override
-    public void setNext(Handler handler) {
-        next = handler;
-    }
-
-    @Override
-    public Handler getNext() {
-        return next;
-    }
-
-    @Override
-    public void handler(Event event) {
+    public Event handler(Event event) {
         if (event.getEvent() == EventsType.TAKE_ATTACK) {
             takeDamage(event.getValue());
-        } else if(next != null) {
-            if (event.getEvent() == EventsType.TAKE_ATTACK_FOR_NEXT) {
-                next.handler(new Event(this, EventsType.TAKE_ATTACK, event.getValue()));
-            } else {
-                next.handler(new Event(this, event.getEvent(), event.getValue()));
-            }
+            return null;
         }
+        if (event.getEvent() == EventsType.TAKE_ATTACK_FOR_NEXT) {
+            event.setEvent(EventsType.TAKE_ATTACK);
+        } else {
+            event.setOwnerEvent(this);
+        }
+        return event;
     }
 }
