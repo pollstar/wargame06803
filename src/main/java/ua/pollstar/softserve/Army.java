@@ -1,15 +1,11 @@
 package ua.pollstar.softserve;
 
 import ua.pollstar.softserve.eventhandling.Event;
-import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.warriors.*;
 
-import javax.security.auth.callback.LanguageCallback;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class Army implements Iterable<Warrior> {
     private LinkedList<Warrior> troops = new LinkedList<>();
@@ -33,15 +29,6 @@ public class Army implements Iterable<Warrior> {
             troops.addLast(w);
         }
     }
-
-    public void addUnit(Warrior warrior) {
-        troops.addLast(warrior);
-    }
-
-    public void clearTroops() {
-        troops.clear();
-    }
-
 
     private Warlord searchWarlord() {
         for (Warrior k : troops) {
@@ -99,7 +86,7 @@ public class Army implements Iterable<Warrior> {
 
     public void handler(Event event) {
         var it = troops.iterator();
-        Event callbackEvent = null;
+        Event callbackEvent;
         if (it.hasNext()) {
             callbackEvent = it.next().handler(event);
             while (it.hasNext()) {

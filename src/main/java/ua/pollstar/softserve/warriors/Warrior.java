@@ -38,15 +38,21 @@ public class Warrior{
         if (enemy == null) {
             return;
         }
-        army.handler(new Event(this, EventsType.NEED_HEAL, 0));
-        enemy.getArmy().handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
+        if (this.getArmy() != null) {
+            army.handler(new Event(this, EventsType.NEED_HEAL, 0));
+        }
+        if (enemy.getArmy() == null) {
+            enemy.handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
+        } else {
+            enemy.getArmy().handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
+        }
     }
 
     public void attackEnemyInStraightFight(Warrior enemy) {
         if (enemy == null) {
             return;
         }
-        enemy.handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
+        enemy.handler(new Event(null, EventsType.TAKE_ATTACK, getAttack()));
     }
 
     public void takeDamage(int damage) {

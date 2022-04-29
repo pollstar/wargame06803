@@ -47,12 +47,13 @@ public class Healer extends Warrior implements Handler {
 
     @Override
     public Event handler(Event event) {
-        if (event.getEvent() == EventsType.NEED_HEAL) {
-            if (getArmy() != null && getArmy() == event.getOwnerEvent().getArmy()) {
-                heal(event.getOwnerEvent());
-            }
+        if (event.getEvent() == EventsType.NEED_HEAL &&
+                getArmy() != null &&
+                getArmy() == event.getOwnerEvent().getArmy()) {
+            heal(event.getOwnerEvent());
+            event.setOwnerEvent(this);
+            return event;
         }
-        event.setOwnerEvent(this);
-        return event;
+        return super.handler(event);
     }
 }

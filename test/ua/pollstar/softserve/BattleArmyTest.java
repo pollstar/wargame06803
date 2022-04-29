@@ -373,13 +373,15 @@ class BattleArmyTest {
         army1.addUnit(Warrior.class, 1);
         army2.addUnit(Vampire.class, 1);
         assertTrue(Battle.fight(army1, army2));
-//        if (army1.isAlive()) {
-//            System.out.println("Warrior in army1 is:" + army1.getWarrior().getClass().getSimpleName());
-//            System.out.println("       health: " + army1.getWarrior().getHealth());
-//        } else if (army2.isAlive()) {
-//            System.out.println("Warrior in army2 is:" + army2.getWarrior().getClass().getSimpleName());
-//            System.out.println("       health: " + army2.getWarrior().getHealth());
-//        }
+    }
+
+    @Test
+    @DisplayName("battleWarriorVsWarrior")
+    void battleLancer2VsWarrior3() {
+        army1.addUnit(Lancer.class, 2);
+        army2.addUnit(Warrior.class, 3);
+        var res = Battle.fight(army1, army2);
+        assertTrue(res);
     }
 
 }

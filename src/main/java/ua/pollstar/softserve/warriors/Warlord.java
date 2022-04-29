@@ -2,7 +2,7 @@ package ua.pollstar.softserve.warriors;
 
 import ua.pollstar.softserve.Army;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class Warlord extends Defender{
@@ -31,7 +31,7 @@ public class Warlord extends Defender{
 
         if (warriors.isEmpty()) {
             if(healers.isEmpty()) {
-                return new LinkedList<Warrior>(Arrays.asList(this));
+                return new LinkedList<>(Collections.singletonList(this));
             }
             healers.addLast(this);
             return healers;
