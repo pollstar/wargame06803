@@ -33,19 +33,18 @@ public class Vampire extends Warrior {
         int healthEnemyBeforeAttack = enemy.getHealth();
         super.attackEnemy(enemy);
         final int percent = 100;
-        setHealth(getHealth() + (healthEnemyBeforeAttack - enemy.getHealth()) * getVampirism()
+        int healthEnemyAfterAttack = Math.max(enemy.getHealth(), 0);
+        setHealth(getHealth() + (healthEnemyBeforeAttack - healthEnemyAfterAttack) * getVampirism()
                 / percent);
     }
 
     @Override
     public void attackEnemyInStraightFight(Warrior enemy) {
-        if (enemy == null) {
-            return;
-        }
         int healthEnemyBeforeAttack = enemy.getHealth();
         super.attackEnemyInStraightFight(enemy);
         final int percent = 100;
-        setHealth(getHealth() + (healthEnemyBeforeAttack - enemy.getHealth()) * getVampirism()
+        int healthEnemyAfterAttack = Math.max(enemy.getHealth(), 0);
+        setHealth(getHealth() + (healthEnemyBeforeAttack - healthEnemyAfterAttack) * getVampirism()
                 / percent);
     }
 

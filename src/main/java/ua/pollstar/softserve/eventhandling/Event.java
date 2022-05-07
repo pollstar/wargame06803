@@ -1,7 +1,6 @@
 package ua.pollstar.softserve.eventhandling;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import ua.pollstar.softserve.warriors.Warrior;
@@ -13,4 +12,5 @@ public class Event {
     private Warrior ownerEvent;
     private EventsType event;
     private int value;
+
 }

@@ -2,9 +2,7 @@ package ua.pollstar.softserve.weapons;
 
 
 import lombok.Builder;
-import lombok.ToString;
 
-@ToString
 public class Weapon {
     private int health = 0;
     private int attack = 0;
@@ -16,14 +14,16 @@ public class Weapon {
     }
 
     private Weapon(int health, int attack, int defense, int vampirism, int heal) {
-        builderInternal()
-                .health(health)
-                .attack(attack)
-                .defense(defense)
-                .vampirism(vampirism)
-                .heal(heal)
-                .build();
-     }
+        setParametrs(health, attack, defense, vampirism, heal);
+    }
+
+    private void setParametrs(int health, int attack, int defense, int vampirism, int heal) {
+        this.health = health;
+        this.attack = attack;
+        this.defense = defense;
+        this.vampirism = vampirism;
+        this.heal = heal;
+    }
 
     @Builder(builderMethodName = "builder")
     public static Weapon newWeapon(int health, int attack, int defense, int vampirism, int heal) {
@@ -32,11 +32,7 @@ public class Weapon {
 
     @Builder(builderMethodName = "builderInternal")
     protected void newWeaponInternal(int health, int attack, int defense, int vampirism, int heal) {
-        this.health = health;
-        this.attack = attack;
-        this.defense = defense;
-        this.vampirism = vampirism;
-        this.heal = heal;
+        setParametrs(health, attack, defense, vampirism, heal);
     }
 
 
@@ -58,5 +54,16 @@ public class Weapon {
 
     public int getHeal() {
         return heal;
+    }
+
+    @Override
+    public String toString() {
+        return "Weapon: " + this.getClass().getSimpleName() + " {" +
+                "health=" + health +
+                ", attack=" + attack +
+                ", defense=" + defense +
+                ", vampirism=" + vampirism +
+                ", heal=" + heal +
+                '}';
     }
 }

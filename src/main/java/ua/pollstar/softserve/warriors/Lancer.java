@@ -16,7 +16,8 @@ public class Lancer extends Warrior {
         int healthEnemyBeforeAttack = enemy.getHealth();
         super.attackEnemy(enemy);
         final int percent = 100;
-        int damage = (healthEnemyBeforeAttack - enemy.getHealth()) * percentNextDamage / percent;
+        int healthEnemyAfterAttack = Math.max(enemy.getHealth(), 0);
+        int damage = (healthEnemyBeforeAttack - healthEnemyAfterAttack) * percentNextDamage / percent;
         if (enemy.getArmy() != null){
             enemy.getArmy().handler(new Event(this, EventsType.TAKE_ATTACK_FOR_NEXT, damage));
         }

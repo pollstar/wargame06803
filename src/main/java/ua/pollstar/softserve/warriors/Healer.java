@@ -2,10 +2,9 @@ package ua.pollstar.softserve.warriors;
 
 import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.EventsType;
-import ua.pollstar.softserve.eventhandling.Handler;
 import ua.pollstar.softserve.weapons.Weapon;
 
-public class Healer extends Warrior implements Handler {
+public class Healer extends Warrior  {
     private int maxHealOneTime;
     private int healOneTime;
     private int countHeals = 50;

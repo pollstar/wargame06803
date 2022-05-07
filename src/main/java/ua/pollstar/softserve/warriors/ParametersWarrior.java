@@ -12,6 +12,9 @@ public class ParametersWarrior {
         HEAL
     }
     private static Map<Class<? extends Warrior>, Map<Parameter, Integer>> parameters = Map.of(
+            Rookie.class, Map.of(
+                    Parameter.HEALTH, 50,
+                    Parameter.ATTACK,1),
             Warrior.class, Map.of(
                     Parameter.HEALTH, 50,
                     Parameter.ATTACK,5),

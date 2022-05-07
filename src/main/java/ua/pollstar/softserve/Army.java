@@ -2,6 +2,7 @@ package ua.pollstar.softserve;
 
 import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.warriors.*;
+import ua.pollstar.softserve.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,6 +45,12 @@ public class Army implements Iterable<Warrior> {
             return troops.peek();
         }
         return null;
+    }
+
+    void equipWeapon(int index, Weapon weapon) {
+        if (index < troops.size()) {
+            troops.get(index).equipWeapon(weapon);
+        }
     }
 
     public boolean isAlive() {

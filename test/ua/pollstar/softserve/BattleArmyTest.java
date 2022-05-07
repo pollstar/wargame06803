@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.pollstar.softserve.warriors.*;
+import ua.pollstar.softserve.weapons.Shield;
+import ua.pollstar.softserve.weapons.Sword;
 
 import java.util.stream.Stream;
 
@@ -45,7 +47,7 @@ class BattleArmyTest {
                 Arguments.of(Vampire.class, 2, Warrior.class, 3, false),
                 Arguments.of(Vampire.class, 5, Warrior.class, 7, false),
                 Arguments.of(Vampire.class, 20, Warrior.class, 21, true),
-                Arguments.of(Vampire.class, 10, Warrior.class, 11, true),
+                Arguments.of(Vampire.class, 10, Warrior.class, 11, false),
                 Arguments.of(Vampire.class, 11, Warrior.class, 7, true),
                 Arguments.of(Lancer.class, 1, Warrior.class, 2, false),
                 Arguments.of(Lancer.class, 2, Warrior.class, 3, true),
@@ -336,6 +338,162 @@ class BattleArmyTest {
         assertTrue(Battle.fight(army1, army2));
     }
 
+
+    @Test
+    @DisplayName("Test17. Battle")
+    void battle17() {
+        /*
+         * army_1.add_units(Lancer, 7)
+         * army_1.add_units(Vampire, 3)
+         * army_1.add_units(Healer, 1)
+         * army_1.add_units(Warrior, 4)
+         * army_1.add_units(Healer, 1)
+         * army_1.add_units(Defender, 2)
+         *
+         * army_2.add_units(Warrior, 4)
+         * army_2.add_units(Defender, 4)
+         *army_2.add_units(Healer, 1)
+         *army_2.add_units(Vampire, 6)
+         *army_2.add_units(Lancer, 4)
+         */
+
+        army1.addUnit(Lancer.class, 7);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Healer.class, 1);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Healer.class, 1);
+        army1.addUnit(Defender.class, 2);
+
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Healer.class, 1);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 4);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test18. Battle")
+    void battle18() {
+        /*
+        army_1.add_units(Lancer, 1)
+        army_1.add_units(Warrior, 3)
+        army_1.add_units(Healer, 1)
+        army_1.add_units(Warrior, 4)
+        army_1.add_units(Healer, 1)
+        army_1.add_units(Knight, 2)
+
+        army_2.add_units(Warrior, 4)
+        army_2.add_units(Defender, 4)
+        army_2.add_units(Healer, 1)
+        army_2.add_units(Vampire, 6)
+        army_2.add_units(Lancer, 4)
+         */
+
+        army1.addUnit(Lancer.class, 1);
+        army1.addUnit(Warrior.class, 3);
+        army1.addUnit(Healer.class, 1);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Healer.class, 1);
+        army1.addUnit(Knight.class, 2);
+
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Healer.class, 1);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 4);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test19. Battle")
+    void battle19() {
+        /*
+            army_1.add_units(Lancer, 5)
+            army_1.add_units(Vampire, 3)
+            army_1.add_units(Warrior, 4)
+            army_1.add_units(Defender, 2)
+
+            army_2.add_units(Warrior, 4)
+            army_2.add_units(Defender, 4)
+            army_2.add_units(Vampire, 6)
+            army_2.add_units(Lancer, 5)
+         */
+
+        army1.addUnit(Lancer.class, 5);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Defender.class, 2);
+
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 5);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test20. Battle")
+    void battle20() {
+        /*
+             army_1.add_units(Lancer, 7)
+            army_1.add_units(Vampire, 3)
+            army_1.add_units(Warrior, 4)
+            army_1.add_units(Defender, 2)
+
+            army_2.add_units(Warrior, 4)
+            army_2.add_units(Defender, 4)
+            army_2.add_units(Vampire, 6)
+            army_2.add_units(Lancer, 4)
+       */
+
+        army1.addUnit(Lancer.class, 7);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Defender.class, 2);
+
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 4);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test21. Battle")
+    void battle21() {
+        /*
+            army_1.add_units(Lancer, 7)
+            army_1.add_units(Vampire, 3)
+            army_1.add_units(Healer, 1)
+            army_1.add_units(Warrior, 4)
+            army_1.add_units(Healer, 1)
+            army_1.add_units(Defender, 2)
+
+            army_2.add_units(Warrior, 4)
+            army_2.add_units(Defender, 4)
+            army_2.add_units(Healer, 1)
+            army_2.add_units(Vampire, 6)
+            army_2.add_units(Lancer, 4)
+       */
+
+        army1.addUnit(Lancer.class, 7);
+        army1.addUnit(Vampire.class, 3);
+        army1.addUnit(Healer.class, 1);
+        army1.addUnit(Warrior.class, 4);
+        army1.addUnit(Healer.class, 1);
+        army1.addUnit(Defender.class, 2);
+
+        army2.addUnit(Warrior.class, 4);
+        army2.addUnit(Defender.class, 4);
+        army2.addUnit(Healer.class, 1);
+        army2.addUnit(Vampire.class, 6);
+        army2.addUnit(Lancer.class, 4);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+
+
     @Test
     @DisplayName("battleLancerVsWarriorWithHealer")
     void battleLancerVsWarriorWithHealer() {
@@ -384,4 +542,109 @@ class BattleArmyTest {
         assertTrue(res);
     }
 
+    @Test
+    @DisplayName("Test23. Battle")
+    void battle23() {
+    /*
+        army_1.add_units(Warlord, 1)
+        army_1.add_units(Warrior, 2)
+        army_1.add_units(Lancer, 2)
+        army_1.add_units(Healer, 2)
+        army_2.add_units(Warlord, 1)
+        army_2.add_units(Vampire, 1)
+        army_2.add_units(Healer, 2)
+        army_2.add_units(Knight, 2)
+    */
+        army1.addUnit(Warlord.class, 1);
+        army1.addUnit(Warrior.class, 2);
+        army1.addUnit(Lancer.class, 2);
+        army1.addUnit(Healer.class, 2);
+
+        army2.addUnit(Warlord.class, 1);
+        army2.addUnit(Vampire.class, 1);
+        army2.addUnit(Healer.class, 2);
+        army2.addUnit(Knight.class, 2);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test24. Battle")
+    void battle24() {
+    /*
+         army_1.add_units(Warrior, 2)
+        army_1.add_units(Lancer, 2)
+        army_1.add_units(Defender, 1)
+        army_1.add_units(Warlord, 3)
+
+        army_2.add_units(Warlord, 2)
+        army_2.add_units(Vampire, 1)
+        army_2.add_units(Healer, 5)
+        army_2.add_units(Knight, 2)
+   */
+        army1.addUnit(Warrior.class, 2);
+        army1.addUnit(Lancer.class, 2);
+        army1.addUnit(Defender.class, 1);
+        army1.addUnit(Warlord.class, 3);
+
+        army2.addUnit(Warlord.class, 2);
+        army2.addUnit(Vampire.class, 1);
+        army2.addUnit(Healer.class, 5);
+        army2.addUnit(Knight.class, 2);
+        assertFalse(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test25. Battle")
+    void battle25() {
+    /*
+        army_1.add_units(Warrior, 2)
+        army_1.add_units(Lancer, 3)
+        army_1.add_units(Defender, 1)
+        army_1.add_units(Warlord, 4)
+        army_2.add_units(Warlord, 1)
+        army_2.add_units(Vampire, 1)
+        army_2.add_units(Rookie, 1)
+        army_2.add_units(Knight, 1)
+   */
+        army1.addUnit(Warrior.class, 2);
+        army1.addUnit(Lancer.class, 3);
+        army1.addUnit(Defender.class, 1);
+        army1.addUnit(Warlord.class, 4);
+
+        army2.addUnit(Warlord.class, 1);
+        army2.addUnit(Vampire.class, 1);
+        army2.addUnit(Rookie.class, 1);
+        army2.addUnit(Knight.class, 1);
+        assertTrue(Battle.fight(army1, army2));
+    }
+
+    @Test
+    @DisplayName("Test26. Battle")
+    void battle26() {
+    /*
+        army_1.add_units(Warrior, 2)
+        army_1.add_units(Lancer, 3)
+        army_1.add_units(Defender, 1)
+        army_1.add_units(Warlord, 1)
+        army_2.add_units(Warlord, 5)
+        army_2.add_units(Vampire, 1)
+        army_2.add_units(Rookie, 1)
+        army_2.add_units(Knight, 1)
+        army_1.units[0].equip_weapon(Sword())
+        army_2.units[0].equip_weapon(Shield())
+   */
+        army1.addUnit(Warrior.class, 2);
+        army1.addUnit(Lancer.class, 3);
+        army1.addUnit(Defender.class, 1);
+        army1.addUnit(Warlord.class, 1);
+
+        army2.addUnit(Warlord.class, 5);
+        army2.addUnit(Vampire.class, 1);
+        army2.addUnit(Rookie.class, 1);
+        army2.addUnit(Knight.class, 1);
+
+        army1.equipWeapon(0, new Sword());
+        army2.equipWeapon(0, new Shield());
+        assertTrue(Battle.fight(army1, army2));
+    }
 }
