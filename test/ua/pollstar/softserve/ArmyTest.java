@@ -143,7 +143,7 @@ class ArmyTest {
                         ))
                 ),
                 Arguments.of(
-                        new ArrayList<Class<? extends Warrior>>(List.of(
+                        new ArrayList<>(List.of(
                                 Warrior.class,
                                 Warlord.class,
                                 Warlord.class,
@@ -153,7 +153,7 @@ class ArmyTest {
                                 Lancer.class,
                                 Lancer.class
                         )),
-                        new ArrayList<Class<? extends Warrior>>(List.of(
+                        new ArrayList<>(List.of(
                                 Lancer.class,
                                 Warrior.class,
                                 Warrior.class,
@@ -163,7 +163,7 @@ class ArmyTest {
                         ))
                 ),
                 Arguments.of(
-                        new ArrayList<Class<? extends Warrior>>(List.of(
+                        new ArrayList<>(List.of(
                                 Warrior.class,
                                 Warlord.class,
                                 Warlord.class,
@@ -172,7 +172,7 @@ class ArmyTest {
                                 Defender.class,
                                 Defender.class
                         )),
-                        new ArrayList<Class<? extends Warrior>>(List.of(
+                        new ArrayList<>(List.of(
                                 Warrior.class,
                                 Warrior.class,
                                 Defender.class,
@@ -181,7 +181,7 @@ class ArmyTest {
                         ))
                 ),
                 Arguments.of(
-                        new ArrayList<Class<? extends Warrior>>(List.of(
+                        new ArrayList<>(List.of(
                                 Warrior.class,
                                 Warrior.class,
                                 Defender.class,
@@ -189,7 +189,7 @@ class ArmyTest {
                                 Lancer.class,
                                 Healer.class
                         )),
-                        new ArrayList<Class<? extends Warrior>>(List.of(
+                        new ArrayList<>(List.of(
                                 Warrior.class,
                                 Warrior.class,
                                 Defender.class,
