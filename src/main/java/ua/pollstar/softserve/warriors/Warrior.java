@@ -111,4 +111,19 @@ public class Warrior{
         }
         return event;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "{" +
+                getDataForPrintString() +
+                '}';
+    }
+
+    protected String getDataForPrintString() {
+        return  "maxHealth=" + maxHealth +
+                ", health=" + health +
+                ", maxAttack=" + maxAttack +
+                ", attack=" + attack;
+    }
+
 }

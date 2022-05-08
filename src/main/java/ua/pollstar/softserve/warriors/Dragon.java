@@ -1,19 +1,32 @@
 package ua.pollstar.softserve.warriors;
 
+import ua.pollstar.softserve.Army;
 import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.EventsType;
 
 public class Dragon extends Lancer{
     @Override
     public void attackEnemy(Warrior enemy) {
-        int healthEnemyBeforeAttack = enemy.getHealth();
-        super.attackEnemy(enemy);
-        final int percent = 100;
-        int healthEnemyAfterAttack = Math.max(enemy.getHealth(), 0);
-        int damage = (healthEnemyBeforeAttack - healthEnemyAfterAttack) * percentNextDamage / percent;
-        if (enemy.getArmy() != null){
-            enemy.getArmy().handler(new Event(this, EventsType.TAKE_ATTACK_FOR_NEXT, damage));
+        attackEnemyInStraightFight(enemy);
+    }
+
+
+    public void attackEnemyInStraightFight(Warrior enemy) {
+        if (enemy == null) {
+            return;
         }
+        Army enemyArmy = enemy.getArmy();
+        if (enemyArmy == null) {
+            enemy.handler(new Event(this, EventsType.TAKE_ATTACK, getAttack()));
+            return;
+        }
+        enemyArmy.handler(new Event(this, EventsType.TAKE_FIRE_ATTACK, getAttack()));
+    }
+
+
+    protected String getDataForPrintString() {
+        return  super.getDataForPrintString() +
+                ", percentNextDamage=" + getPercentNextDamage();
     }
 
 }

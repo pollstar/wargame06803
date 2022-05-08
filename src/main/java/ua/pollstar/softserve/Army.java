@@ -1,12 +1,11 @@
 package ua.pollstar.softserve;
 
 import ua.pollstar.softserve.eventhandling.Event;
+import ua.pollstar.softserve.eventhandling.EventsType;
 import ua.pollstar.softserve.warriors.*;
 import ua.pollstar.softserve.weapons.Weapon;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Army implements Iterable<Warrior> {
     private LinkedList<Warrior> troops = new LinkedList<>();
@@ -29,6 +28,11 @@ public class Army implements Iterable<Warrior> {
             }
             troops.addLast(w);
         }
+    }
+
+    public void addUnit(Warrior warrior) {
+        warrior.setArmy(this);
+        troops.addLast(warrior);
     }
 
     public Warrior getWarrior() {
@@ -83,6 +87,9 @@ public class Army implements Iterable<Warrior> {
     }
 
     public void handler(Event event) {
+        if (event.getEvent() == EventsType.TAKE_FIRE_ATTACK) {
+            handlerEventFire(event);
+        }
         var it = troops.iterator();
         Event callbackEvent;
         if (it.hasNext()) {
@@ -94,5 +101,30 @@ public class Army implements Iterable<Warrior> {
                 callbackEvent = it.next().handler(callbackEvent);
             }
         }
+    }
+
+    private void handlerEventFire(Event event) {
+        if (event.getOwnerEvent().getClass() != Dragon.class) {
+            throw new IllegalArgumentException("Owner event should be Dragon.");
+        }
+        Dragon dragon = ((Dragon) event.getOwnerEvent());
+        int percent = 100;
+        int countEnemyForDamage = Math.round(percent / dragon.getPercentNextDamage());
+        int index = dragon.getArmy().troops.indexOf(dragon);
+
+        if (troops.size() > index) {
+            Map<Integer, Integer> mapAttackLevel = new HashMap<>();
+            for (int i = index - countEnemyForDamage, j = -countEnemyForDamage;
+                 i < index + countEnemyForDamage; i++, j++) {
+                if (i >= 0 && i < troops.size()) {
+                    int attack = dragon.getAttack() * (countEnemyForDamage - Math.abs(j)) * dragon.getPercentNextDamage()/percent;
+                    troops.get(i).handler(new Event(null, EventsType.TAKE_ATTACK, attack));
+                }
+            }
+        }
+    }
+
+    public int size() {
+        return troops.size();
     }
 }
