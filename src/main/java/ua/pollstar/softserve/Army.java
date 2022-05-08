@@ -37,6 +37,7 @@ public class Army implements Iterable<Warrior> {
 
     public Warrior getWarrior() {
         if (isAlive()) {
+            moveUnits();
             return troops.peek();
         }
         return null;
@@ -113,7 +114,6 @@ public class Army implements Iterable<Warrior> {
         int index = dragon.getArmy().troops.indexOf(dragon);
 
         if (troops.size() > index) {
-            Map<Integer, Integer> mapAttackLevel = new HashMap<>();
             for (int i = index - countEnemyForDamage, j = -countEnemyForDamage;
                  i < index + countEnemyForDamage; i++, j++) {
                 if (i >= 0 && i < troops.size()) {
