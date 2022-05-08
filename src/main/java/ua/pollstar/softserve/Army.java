@@ -24,20 +24,11 @@ public class Army implements Iterable<Warrior> {
     public void addUnit(Class<? extends Warrior> warrior, int count) {
         for (int i = 0; i < count; i++) {
             Warrior w = WarriorFactory.createWarrior(warrior, this);
-            if (w.getClass() == Warlord.class && searchWarlord() != null) {
+            if (w.getClass() == Warlord.class && getWarlord() != null) {
                 return;
             }
             troops.addLast(w);
         }
-    }
-
-    private Warlord searchWarlord() {
-        for (Warrior k : troops) {
-            if (k.getClass() == Warlord.class) {
-                return (Warlord) k;
-            }
-        }
-        return null;
     }
 
     public Warrior getWarrior() {
@@ -47,7 +38,7 @@ public class Army implements Iterable<Warrior> {
         return null;
     }
 
-    void equipWeapon(int index, Weapon weapon) {
+    public void equipWeapon(int index, Weapon weapon) {
         if (index < troops.size()) {
             troops.get(index).equipWeapon(weapon);
         }

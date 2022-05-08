@@ -40,8 +40,11 @@ public class ParametersWarrior {
             Warlord.class, Map.of(
                     Parameter.HEALTH, 100,
                     Parameter.ATTACK, 4,
-                    Parameter.DEFENSE, 2)
-
+                    Parameter.DEFENSE, 2),
+            Dragon.class, Map.of(
+                    Parameter.HEALTH, 80,
+                    Parameter.ATTACK, 20,
+                    Parameter.NEXT_DAMAGE, 20)
             );
 
     public static Map<Parameter, Integer> getParameters(Class<? extends Warrior> warrior) {

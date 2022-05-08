@@ -12,7 +12,8 @@ public class WarriorFactory {
         VAMPIRE,
         LANCER,
         HEALER,
-        WARLORD
+        WARLORD,
+        DRAGON
     }
 
     public static Warrior createWarrior(Type type) {
@@ -24,6 +25,7 @@ public class WarriorFactory {
             case LANCER -> new Lancer();
             case HEALER -> new Healer();
             case WARLORD -> new Warlord();
+            case DRAGON -> new Dragon();
         };
     }
 

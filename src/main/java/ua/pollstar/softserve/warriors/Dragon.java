@@ -3,14 +3,7 @@ package ua.pollstar.softserve.warriors;
 import ua.pollstar.softserve.eventhandling.Event;
 import ua.pollstar.softserve.eventhandling.EventsType;
 
-public class Lancer extends Warrior {
-    protected int percentNextDamage;
-
-    public Lancer() {
-        this.percentNextDamage = ParametersWarrior.getParameter(this.getClass(),
-                ParametersWarrior.Parameter.NEXT_DAMAGE);
-    }
-
+public class Dragon extends Lancer{
     @Override
     public void attackEnemy(Warrior enemy) {
         int healthEnemyBeforeAttack = enemy.getHealth();
@@ -22,4 +15,5 @@ public class Lancer extends Warrior {
             enemy.getArmy().handler(new Event(this, EventsType.TAKE_ATTACK_FOR_NEXT, damage));
         }
     }
+
 }
